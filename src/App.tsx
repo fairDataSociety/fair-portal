@@ -1,5 +1,5 @@
 import { CssBaseline } from "@mui/material";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import AppLayout from "./components/AppLayout/AppLayout";
 import { DappContextProvider } from "./context/DappContext";
 import { ThemeContextProvider } from "./context/ThemeContext";
@@ -7,7 +7,7 @@ import Routes from "./routes/Routes";
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <ThemeContextProvider>
         <DappContextProvider>
           <CssBaseline />
@@ -16,7 +16,7 @@ function App() {
           </AppLayout>
         </DappContextProvider>
       </ThemeContextProvider>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 

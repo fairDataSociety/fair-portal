@@ -1,24 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { createContext, useContext } from "react";
 import { Dapp } from "../model/Dapp";
+import { getDapps } from "../storage/dapp-registry";
 
 // TODO will be dynamic
 const categories = ["Text editing", "Media", "Privacy"];
-
-const dapps: Dapp[] = [
-  {
-    name: "Photo Album",
-    categories: ["Media"],
-  },
-  {
-    name: "Dracula",
-    categories: ["Text editing"],
-  },
-  {
-    name: "Consent Viewer",
-    categories: ["Privacy"],
-  },
-];
 
 export interface DappFilters {
   search: string;
@@ -62,6 +48,20 @@ export const DappContextProvider = ({ children }: DappContextProviderProps) => {
     categories: [],
   });
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadDapps = async () => {
+    try {
+      // TODO Add pagination
+      const dapps = await getDapps(0, 100);
+      setAllDapps(dapps);
+      setFilteredDapps(dapps);
+    } catch (error) {
+      setError(String(error));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const onCategorySelect = (category: string) => {
     const selectedIndex = filter.categories.findIndex((c) => c === category);
@@ -106,11 +106,7 @@ export const DappContextProvider = ({ children }: DappContextProviderProps) => {
   }, [filter]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setAllDapps(dapps);
-      setFilteredDapps(dapps);
-      setLoading(false);
-    }, 500);
+    loadDapps();
   }, []);
 
   return (
