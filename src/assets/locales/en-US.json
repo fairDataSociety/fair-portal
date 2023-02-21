@@ -1,0 +1,23 @@
+{
+  "DAPP_NAME": "dApp Name",
+  "AUTHOR": "Author's Name",
+  "AUTHOR_ADDRESS": "Author's Address",
+  "URL": "URL",
+  "LOGO_URL": "Logo URL",
+  "SHORT_DESCRIPTION": "Short Description",
+  "LONG_DESCRIPTION": "Long Description",
+  "GITHUB_REPO": "Github Repo",
+  "WEBSITE": "Website",
+  "TELEGRAM": "Telegram Channel",
+  "REDDIT": "Reddit",
+  "TWITTER": "Twitter",
+  "REGISTER": "Register",
+  "OPTIONAL": "Optional",
+  "REQUIRED_ERROR": "This field is required.",
+  "INVALID_VALUE": "Invalid field value.",
+  "MINIMAL_LENGTH_ERROR": "The value must be minumum {length} characters long.",
+  "REGISTER_DAPP_TITLE": "Register your Fair Data dApp",
+  "URL_TOOLTIP": "Relative URL of your dApp. For example: /example/dapp",
+  "AUTHOR_ADDRESS_TOOLTIP": "Etherum address. For example 0x12345...",
+  "DAPP_REGISTRATION_SUCCESS": "Congratulations, you have successfully registered your dApp."
+}

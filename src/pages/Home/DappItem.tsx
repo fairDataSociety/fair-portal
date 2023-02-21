@@ -20,7 +20,9 @@ export const Logo = styled("img")({
   objectFit: "cover",
 });
 
-const DappItem = ({ dapp: { name } }: DappItemProps) => {
+const DappItem = ({
+  dapp: { name, shortDescription, longDescription },
+}: DappItemProps) => {
   const theme = useTheme();
   return (
     <Paper
@@ -39,7 +41,7 @@ const DappItem = ({ dapp: { name } }: DappItemProps) => {
           {name}
         </Typography>
         <Typography sx={{ margin: "10px 0" }} color="text.secondary">
-          Short dApp description.
+          {shortDescription}
         </Typography>
         <Typography
           variant="body2"
@@ -51,10 +53,7 @@ const DappItem = ({ dapp: { name } }: DappItemProps) => {
             display: "-webkit-box",
           }}
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
-          provident commodi, fugiat facilis dicta ducimus dolorum et totam sed
-          temporibus aliquid incidunt magni illum recusandae. Iure ipsam ab
-          debitis possimus?
+          {longDescription}
         </Typography>
         <CardActions sx={{ paddingLeft: 0, paddingRight: 0 }}>
           <Button

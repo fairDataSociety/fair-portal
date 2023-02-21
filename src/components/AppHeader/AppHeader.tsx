@@ -31,7 +31,7 @@ const AppHeader = (props: AppHeaderProps) => {
         padding: "10px",
         margin: 0,
         borderRadius: 0,
-        marginBottom: "20px",
+        zIndex: 1,
         backgroundColor: palette.primary[palette.mode],
       }}
     >

@@ -1,7 +1,11 @@
 import { createTheme } from "@mui/material";
 
 const lightTheme = createTheme({
-  palette: {},
+  palette: {
+    border: {
+      main: "#ddd",
+    },
+  },
 });
 
 export default lightTheme;

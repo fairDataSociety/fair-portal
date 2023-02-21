@@ -12,19 +12,11 @@ export const Wrapper = styled("div")({
   flexDirection: "column",
 });
 
-export const InnerWrapper = styled("div")(({ theme }) => ({
-  width: "1200px",
-  margin: "auto",
-  [theme.breakpoints.down("lg")]: {
-    width: "100%",
-  },
-}));
-
 const AppLayout = ({ children }: AppLayoutProps) => {
   return (
     <Wrapper>
       <AppHeader />
-      <InnerWrapper>{children}</InnerWrapper>
+      {children}
     </Wrapper>
   );
 };

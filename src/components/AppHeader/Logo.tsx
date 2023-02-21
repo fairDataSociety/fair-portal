@@ -9,7 +9,7 @@ const Logo = () => {
       fontStyle={["bold", "italic"]}
       sx={{ color: palette.primary.main }}
     >
-      dApp Store
+      FDP Portal
     </Typography>
   );
 };
