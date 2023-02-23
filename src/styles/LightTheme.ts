@@ -5,6 +5,10 @@ const lightTheme = createTheme({
     border: {
       main: "#ddd",
     },
+    link: {
+      main: "#eee",
+      dark: "#888",
+    },
   },
 });
 

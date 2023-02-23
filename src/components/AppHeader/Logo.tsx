@@ -6,10 +6,10 @@ const Logo = () => {
   return (
     <Typography
       variant="h4"
-      fontStyle={["bold", "italic"]}
+      fontWeight="bold"
       sx={{ color: palette.primary.main }}
     >
-      FDP Portal
+      Fair Portal
     </Typography>
   );
 };

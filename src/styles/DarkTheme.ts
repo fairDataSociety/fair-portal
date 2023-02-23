@@ -5,6 +5,10 @@ const darkTheme = createTheme({
     border: {
       main: "#ddd",
     },
+    link: {
+      main: "#333",
+      dark: "#888",
+    },
   },
 });
 

@@ -19,5 +19,7 @@
   "REGISTER_DAPP_TITLE": "Register your Fair Data dApp",
   "URL_TOOLTIP": "Relative URL of your dApp. For example: /example/dapp",
   "AUTHOR_ADDRESS_TOOLTIP": "Etherum address. For example 0x12345...",
-  "DAPP_REGISTRATION_SUCCESS": "Congratulations, you have successfully registered your dApp."
+  "DAPP_REGISTRATION_SUCCESS": "Congratulations, you have successfully registered your dApp.",
+  "DISCONNECT": "Disconnect",
+  "STORE": "Store"
 }
