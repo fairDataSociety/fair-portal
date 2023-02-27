@@ -2,35 +2,36 @@ import React, { useEffect, useState } from "react";
 import { createContext, useContext } from "react";
 import { Dapp } from "../model/Dapp";
 import { getDapps } from "../storage/dapp-registry";
-
-// TODO will be dynamic
-const categories = ["Text editing", "Media", "Privacy"];
+import categories from "../assets/data/categories.json";
+import { Category } from "../model/Category";
 
 export interface DappFilters {
   search: string;
-  categories: string[];
+  category: Category | null;
 }
 
 export interface DappContext {
   allDapps: Dapp[];
   filteredDapps: Dapp[];
-  categories: string[];
+  categories: Category[];
   loading: boolean;
   filter: DappFilters;
-  onCategorySelect: (category: string) => void;
+  onCategorySelect: (category: Category | null) => void;
+  onSubcategorySelect: (subcateogory: string) => void;
   onSearch: (search: string) => void;
 }
 
 const DappContext = createContext<DappContext>({
   allDapps: [],
   filteredDapps: [],
-  categories: [],
+  categories,
   loading: true,
   filter: {
     search: "",
-    categories: [],
+    category: null,
   },
-  onCategorySelect: (category: string) => {},
+  onCategorySelect: (category: Category | null) => {},
+  onSubcategorySelect: (subcateogory: string) => {},
   onSearch: (search: string) => {},
 });
 
@@ -45,7 +46,7 @@ export const DappContextProvider = ({ children }: DappContextProviderProps) => {
   const [filteredDapps, setFilteredDapps] = useState<Dapp[]>([]);
   const [filter, setFilter] = useState<DappFilters>({
     search: "",
-    categories: [],
+    category: null,
   });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -57,26 +58,42 @@ export const DappContextProvider = ({ children }: DappContextProviderProps) => {
       setAllDapps(dapps);
       setFilteredDapps(dapps);
     } catch (error) {
+      console.error(error);
       setError(String(error));
     } finally {
       setLoading(false);
     }
   };
 
-  const onCategorySelect = (category: string) => {
-    const selectedIndex = filter.categories.findIndex((c) => c === category);
+  const onCategorySelect = (category: Category | null) => {
+    const filterCategory =
+      category === null
+        ? null
+        : {
+            ...category,
+            subcategories: [...category.subcategories],
+          };
+    setFilter({
+      ...filter,
+      category: filterCategory,
+    });
+  };
 
-    const filteredCategories = [...filter.categories];
+  const onSubcategorySelect = (subcategory: string) => {
+    const category = { ...(filter.category as Category) };
+    category.subcategories = [...category.subcategories];
 
-    if (selectedIndex < 0) {
-      filteredCategories.push(category);
+    const index = category.subcategories.indexOf(subcategory);
+
+    if (index >= 0) {
+      category.subcategories.splice(index, 1);
     } else {
-      filteredCategories.splice(selectedIndex, 1);
+      category.subcategories.push(subcategory);
     }
 
     setFilter({
       ...filter,
-      categories: filteredCategories,
+      category,
     });
   };
 
@@ -88,14 +105,17 @@ export const DappContextProvider = ({ children }: DappContextProviderProps) => {
   };
 
   const filterDapps = () => {
-    const { search, categories } = filter;
+    const { search, category } = filter;
 
     const filteredDapps = allDapps
       .filter((dapp) => dapp.name.indexOf(search) > -1)
       .filter(
         (dapp) =>
-          categories.length === 0 ||
-          categories.some((c) => dapp.categories.indexOf(c) > -1)
+          !category ||
+          (dapp.category == category.name &&
+            dapp.subcategories.some((subcategory) =>
+              category.subcategories.includes(subcategory)
+            ))
       );
 
     setFilteredDapps(filteredDapps);
@@ -118,6 +138,7 @@ export const DappContextProvider = ({ children }: DappContextProviderProps) => {
         filter,
         loading,
         onCategorySelect,
+        onSubcategorySelect,
         onSearch,
       }}
     >

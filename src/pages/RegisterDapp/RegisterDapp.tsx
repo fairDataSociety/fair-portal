@@ -10,7 +10,8 @@ const initialDapp: Dapp = {
   name: "",
   authorName: "",
   authorAddress: "",
-  categories: [],
+  category: "",
+  subcategories: [],
   github: "",
   logo: "",
   longDescription: "",
@@ -38,7 +39,8 @@ const RegisterDapp = () => {
         telegram: dapp.telegram || "",
         twitter: dapp.twitter || "",
         website: dapp.website || "",
-        categories: [],
+        category: "",
+        subcategories: [],
       });
 
       setDone(true);

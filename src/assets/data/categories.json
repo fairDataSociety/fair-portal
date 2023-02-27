@@ -1,0 +1,76 @@
+[
+  {
+    "name": "Finance",
+    "subcategories": [
+      "Payments",
+      "Lending",
+      "Investing",
+      "Trading",
+      "Insurance",
+      "Taxation"
+    ]
+  },
+  {
+    "name": "Gaming",
+    "subcategories": ["Gambling", "Virtual worlds", "Sports", "E-sports"]
+  },
+  {
+    "name": "Social media",
+    "subcategories": [
+      "Social networking",
+      "Content sharing",
+      "Online communities"
+    ]
+  },
+  {
+    "name": "Communication",
+    "subcategories": ["Messaging", "Voice and video calling", "Email"]
+  },
+  {
+    "name": "Productivity",
+    "subcategories": [
+      "Project management",
+      "Task tracking",
+      "Note-taking",
+      "Calendar",
+      "Collaboration"
+    ]
+  },
+  {
+    "name": "Health",
+    "subcategories": [
+      "Fitness tracking",
+      "Medical records",
+      "Telemedicine",
+      "Mental health",
+      "Wellness"
+    ]
+  },
+  {
+    "name": "Education",
+    "subcategories": ["E-learning", "Online courses", "Educational resources"]
+  },
+  {
+    "name": "Entertainment",
+    "subcategories": ["Music", "Movies", "Streaming media", "Arts and culture"]
+  },
+  {
+    "name": "Governance",
+    "subcategories": [
+      "Voting systems",
+      "Identity verification",
+      "Reputation systems",
+      "Censorship-resistant communication",
+      "Decentralized autonomous organizations (DAOs)"
+    ]
+  },
+  {
+    "name": "Infrastructure",
+    "subcategories": [
+      "Storage",
+      "Computing power",
+      "Networking",
+      "Blockchain interoperability"
+    ]
+  }
+]

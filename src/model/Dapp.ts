@@ -3,7 +3,8 @@ export interface Dapp {
   url: string;
   authorName: string;
   authorAddress: string;
-  categories: string[];
+  category: string;
+  subcategories: string[];
   logo: string;
   shortDescription: string;
   longDescription: string;
@@ -19,7 +20,8 @@ export const DappSchema: Dapp = {
   url: "",
   authorName: "",
   authorAddress: "",
-  categories: [],
+  category: "",
+  subcategories: [],
   logo: "",
   shortDescription: "",
   longDescription: "",

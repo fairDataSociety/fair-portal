@@ -15,13 +15,25 @@ export interface DappItemProps {
 }
 
 export const Logo = styled("img")({
-  width: "100%",
-  height: "100px",
+  width: "70px",
+  height: "70px",
   objectFit: "cover",
+  flexShrink: 0,
+});
+
+export const Header = styled("div")({
+  display: "flex",
+});
+
+export const Title = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  padding: "0 20px",
+  overflow: "hidden",
 });
 
 const DappItem = ({
-  dapp: { name, shortDescription, longDescription },
+  dapp: { name, authorName, shortDescription, longDescription },
 }: DappItemProps) => {
   const theme = useTheme();
   return (
@@ -30,39 +42,34 @@ const DappItem = ({
       sx={{
         display: "flex",
         flexDirection: "column",
-        padding: "0",
-        paddingBottom: "10px",
-        height: { xs: "auto", sm: "300px" },
+        padding: "10px",
+        height: { xs: "auto", sm: "200px" },
+        backgroundColor: "#8888881c",
       }}
     >
-      <Logo src="https://picsum.photos/200/300" />
+      <Header>
+        <Logo src="https://picsum.photos/200/300" />
+        <Title>
+          <Typography variant="h6" component="div">
+            {name}
+          </Typography>
+          <Typography variant="caption" component="div">
+            {authorName}
+          </Typography>
+        </Title>
+      </Header>
       <CardContent>
-        <Typography variant="h5" component="div">
-          {name}
-        </Typography>
-        <Typography sx={{ margin: "10px 0" }} color="text.secondary">
-          {shortDescription}
-        </Typography>
         <Typography
-          variant="body2"
           sx={{
-            height: "60px",
             overflow: "hidden",
             "-webkit-line-clamp": "3",
             "-webkit-box-orient": "vertical",
             display: "-webkit-box",
           }}
+          color="text.secondary"
         >
-          {longDescription}
+          {shortDescription}
         </Typography>
-        <CardActions sx={{ paddingLeft: 0, paddingRight: 0 }}>
-          <Button
-            size="small"
-            sx={{ margin: 0, padding: "5px 10px", fontWeight: "bold" }}
-          >
-            Learn More
-          </Button>
-        </CardActions>
       </CardContent>
     </Paper>
   );

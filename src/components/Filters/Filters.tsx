@@ -1,41 +1,158 @@
-import React from "react";
-import Done from "@mui/icons-material/Done";
-import { Chip, Stack } from "@mui/material";
+import React, { Fragment } from "react";
+import intl from "react-intl-universal";
+import {
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader,
+  Typography,
+} from "@mui/material";
+import BusinessCenter from "@mui/icons-material/BusinessCenter";
+import SportsEsports from "@mui/icons-material/SportsEsports";
+import Groups from "@mui/icons-material/Groups";
+import Forum from "@mui/icons-material/Forum";
+import AccessAlarms from "@mui/icons-material/AccessAlarms";
+import MonitorHeart from "@mui/icons-material/MonitorHeart";
+import LocalLibrary from "@mui/icons-material/LocalLibrary";
+import Tv from "@mui/icons-material/Tv";
+import AssuredWorkload from "@mui/icons-material/AssuredWorkload";
+import Domain from "@mui/icons-material/Domain";
+import CategoryIcon from "@mui/icons-material/Category";
+import Check from "@mui/icons-material/Check";
+import ClearAll from "@mui/icons-material/ClearAll";
+import { Category } from "../../model/Category";
 
 export interface FiltersProps {
-  categories: string[];
-  selected: string[];
-  onClick: (category: string) => void;
+  categories: Category[];
+  selected: Category | null;
+  onCategorySelect: (category: Category | null) => void;
+  onSubcategorySelect: (subcategory: string) => void;
 }
 
-const Filters = ({ categories, selected, onClick }: FiltersProps) => {
-  const isSelected = (category: string) => selected.some((c) => c === category);
+const getCategoryIcon = (category: string): React.ReactElement => {
+  switch (category) {
+    case "Finance":
+      return <BusinessCenter />;
+    case "Gaming":
+      return <SportsEsports />;
+    case "Social media":
+      return <Groups />;
+    case "Communication":
+      return <Forum />;
+    case "Productivity":
+      return <AccessAlarms />;
+    case "Health":
+      return <MonitorHeart />;
+    case "Education":
+      return <LocalLibrary />;
+    case "Entertainment":
+      return <Tv />;
+    case "Governance":
+      return <AssuredWorkload />;
+    case "Infrastructure":
+      return <Domain />;
+    default:
+      return <CategoryIcon />;
+  }
+};
 
+const Filter = ({
+  name,
+  selected,
+  icon,
+  onSelect,
+}: {
+  name: string;
+  selected: boolean;
+  icon: React.ReactElement;
+  onSelect: () => void;
+}) => (
+  <ListItemButton onClick={onSelect}>
+    <ListItemIcon>{icon}</ListItemIcon>
+    <ListItemText
+      primary={
+        <Typography
+          variant="body2"
+          style={{ fontWeight: selected ? "bold" : "normal" }}
+        >
+          {name}
+        </Typography>
+      }
+    />
+  </ListItemButton>
+);
+
+const SubFilter = ({
+  subcategories,
+  selected,
+  onSelect,
+}: {
+  subcategories: string[];
+  selected: string[];
+  onSelect: (subcategory: string) => void;
+}) => (
+  <List component="div" disablePadding>
+    {subcategories.map((subcategory) => (
+      <ListItemButton
+        key={subcategory}
+        sx={{ pl: 4 }}
+        onClick={() => onSelect(subcategory)}
+      >
+        <ListItemIcon
+          sx={{
+            visibility: selected.includes(subcategory) ? "visible" : "hidden",
+          }}
+        >
+          <Check />
+        </ListItemIcon>
+        <ListItemText primary={subcategory} />
+      </ListItemButton>
+    ))}
+  </List>
+);
+
+const Filters = ({
+  categories,
+  selected,
+  onCategorySelect,
+  onSubcategorySelect,
+}: FiltersProps) => {
   return (
-    <Stack
-      direction="row"
-      spacing={3}
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        margin: "20px",
-        flexWrap: "wrap",
-        gap: "12px",
-      }}
+    <List
+      sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+      subheader={
+        <ListSubheader component="div" id="nested-list-subheader">
+          {intl.get("CATEGORIES")}
+        </ListSubheader>
+      }
     >
-      {categories.map((category) => {
-        const isCategorySelected = isSelected(category);
-        return (
-          <Chip
-            label={category}
-            key={category}
-            onClick={() => onClick(category)}
-            variant={isCategorySelected ? "filled" : "outlined"}
-            icon={isCategorySelected ? <Done /> : undefined}
+      <Filter
+        name="All"
+        selected={!selected}
+        icon={<ClearAll />}
+        onSelect={() => onCategorySelect(null)}
+      />
+      {categories.map((category) => (
+        <Fragment key={category.name}>
+          <Filter
+            name={category.name}
+            selected={category.name === selected?.name}
+            icon={getCategoryIcon(category.name)}
+            onSelect={() => onCategorySelect(category)}
           />
-        );
-      })}
-    </Stack>
+          {category.name === selected?.name && (
+            <SubFilter
+              subcategories={category.subcategories}
+              selected={selected.subcategories}
+              onSelect={onSubcategorySelect}
+            />
+          )}
+        </Fragment>
+      ))}
+    </List>
   );
 };
 
