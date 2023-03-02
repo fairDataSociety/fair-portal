@@ -10,6 +10,7 @@ import Telegram from "@mui/icons-material/Telegram";
 import Reddit from "@mui/icons-material/Reddit";
 import Twitter from "@mui/icons-material/Twitter";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import CategorySelect from "../CategorySelect/CategorySelect";
 
 export interface DappFormProps {
   dapp: Dapp;
@@ -22,7 +23,9 @@ export interface DappFormFields {
   name: string;
   authorName: string;
   authorAddress: string;
+  ens: string;
   url: string;
+  category: string;
   logo: string;
   shortDescription: string;
   longDescription: string;
@@ -42,6 +45,8 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    clearErrors,
   } = useForm<DappFormFields>();
 
   const getFieldError = (
@@ -80,6 +85,19 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
         helperText={getFieldError(errors.name, 3)}
         data-testid="name"
       />
+      <Tooltip title={intl.get("ENS_TOOLTIP")} arrow>
+        <TextField
+          label={intl.get("ENS")}
+          variant="outlined"
+          sx={fieldStyles}
+          fullWidth
+          {...register("ens", { required: true })}
+          disabled={loading}
+          error={Boolean(errors.ens)}
+          helperText={getFieldError(errors.ens)}
+          data-testid="ens"
+        />
+      </Tooltip>
       <Tooltip title={intl.get("URL_TOOLTIP")} arrow>
         <TextField
           label={intl.get("URL")}
@@ -130,6 +148,17 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
         error={Boolean(errors.logo)}
         helperText={getFieldError(errors.logo)}
         data-testid="logo"
+      />
+      <CategorySelect
+        {...register("category", { required: true })}
+        disabled={loading}
+        onChange={(event) => {
+          setValue("category", event.target.value as string);
+          clearErrors("category");
+        }}
+        error={Boolean(errors.category)}
+        data-testid="category"
+        ref={null}
       />
       <TextField
         label={intl.get("SHORT_DESCRIPTION")}

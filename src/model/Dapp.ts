@@ -1,10 +1,10 @@
 export interface Dapp {
   name: string;
   url: string;
+  ens: string;
   authorName: string;
   authorAddress: string;
   category: string;
-  subcategories: string[];
   logo: string;
   shortDescription: string;
   longDescription: string;
@@ -18,10 +18,10 @@ export interface Dapp {
 export const DappSchema: Dapp = {
   name: "",
   url: "",
+  ens: "",
   authorName: "",
   authorAddress: "",
   category: "",
-  subcategories: [],
   logo: "",
   shortDescription: "",
   longDescription: "",

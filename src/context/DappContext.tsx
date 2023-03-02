@@ -110,12 +110,7 @@ export const DappContextProvider = ({ children }: DappContextProviderProps) => {
     const filteredDapps = allDapps
       .filter((dapp) => dapp.name.indexOf(search) > -1)
       .filter(
-        (dapp) =>
-          !category ||
-          (dapp.category == category.name &&
-            dapp.subcategories.some((subcategory) =>
-              category.subcategories.includes(subcategory)
-            ))
+        (dapp) => !category || category.subcategories.includes(dapp.category)
       );
 
     setFilteredDapps(filteredDapps);
