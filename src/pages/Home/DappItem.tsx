@@ -1,12 +1,10 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { Dapp } from "../../model/Dapp";
-import { CardContent, IconButton, Paper, Typography } from "@mui/material";
-import Web from "@mui/icons-material/Web";
-import GitHub from "@mui/icons-material/GitHub";
-import Telegram from "@mui/icons-material/Telegram";
-import Reddit from "@mui/icons-material/Reddit";
-import Twitter from "@mui/icons-material/Twitter";
+import { CardContent, Paper, Typography } from "@mui/material";
+import DappLinks from "../../components/DappLinks/DappLinks";
+import RouteCodes from "../../routes/RouteCodes";
+import { Link } from "react-router-dom";
 
 export interface DappItemProps {
   dapp: Dapp;
@@ -36,12 +34,17 @@ export const Links = styled("div")({
   bottom: 0,
 });
 
+export const StyledLink = styled(Link)({
+  textDecoration: "none",
+});
+
 const DappItem = ({
   dapp: {
     name,
     authorName,
     logo,
     shortDescription,
+    hash,
     website,
     github,
     reddit,
@@ -57,21 +60,23 @@ const DappItem = ({
         display: "flex",
         flexDirection: "column",
         padding: "10px",
-        height: { xs: "auto", sm: "200px" },
+        height: "200px",
         backgroundColor: "#8888881c",
       }}
     >
-      <Header>
-        <Logo src={logo} />
-        <Title>
-          <Typography variant="h6" component="div">
-            {name}
-          </Typography>
-          <Typography variant="caption" component="div">
-            {authorName}
-          </Typography>
-        </Title>
-      </Header>
+      <StyledLink to={RouteCodes.dapp.replace(":hash", hash as string)}>
+        <Header>
+          <Logo src={logo} />
+          <Title>
+            <Typography variant="h6" component="div">
+              {name}
+            </Typography>
+            <Typography variant="caption" component="div">
+              {authorName}
+            </Typography>
+          </Title>
+        </Header>
+      </StyledLink>
       <CardContent>
         <Typography
           sx={{
@@ -85,56 +90,13 @@ const DappItem = ({
           {shortDescription}
         </Typography>
         <Links>
-          {website && (
-            <IconButton
-              component="a"
-              href={website}
-              target="_blank"
-              size="small"
-            >
-              <Web />
-            </IconButton>
-          )}
-          {github && (
-            <IconButton
-              component="a"
-              href={github}
-              target="_blank"
-              size="small"
-            >
-              <GitHub />
-            </IconButton>
-          )}
-          {reddit && (
-            <IconButton
-              component="a"
-              href={reddit}
-              target="_blank"
-              size="small"
-            >
-              <Reddit />
-            </IconButton>
-          )}
-          {twitter && (
-            <IconButton
-              component="a"
-              href={twitter}
-              target="_blank"
-              size="small"
-            >
-              <Twitter />
-            </IconButton>
-          )}
-          {telegram && (
-            <IconButton
-              component="a"
-              href={telegram}
-              target="_blank"
-              size="small"
-            >
-              <Telegram />
-            </IconButton>
-          )}
+          <DappLinks
+            website={website}
+            github={github}
+            reddit={reddit}
+            twitter={twitter}
+            telegram={telegram}
+          />
         </Links>
       </CardContent>
     </Paper>

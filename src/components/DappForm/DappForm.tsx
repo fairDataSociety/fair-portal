@@ -186,11 +186,17 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
 
       <SocialInput
         label={constructOptionalLabel("WEBSITE")}
-        variant="outlined"
+        formControlProps={{
+          fullWidth: true,
+        }}
         sx={fieldStyles}
         fullWidth
         icon={<Web />}
         {...register("website")}
+        onChange={(event) => {
+          setValue("website", event.target.value as string);
+          clearErrors("website");
+        }}
         ref={null}
         disabled={loading}
         errorMessage={getFieldError(errors.website)}
@@ -199,11 +205,16 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
 
       <SocialInput
         label={constructOptionalLabel("GITHUB_REPO")}
-        variant="outlined"
-        sx={fieldStyles}
-        fullWidth
         icon={<GitHub />}
+        formControlProps={{
+          fullWidth: true,
+        }}
+        sx={fieldStyles}
         {...register("github")}
+        onChange={(event) => {
+          setValue("github", event.target.value as string);
+          clearErrors("github");
+        }}
         ref={null}
         disabled={loading}
         errorMessage={getFieldError(errors.github)}
@@ -212,11 +223,16 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
 
       <SocialInput
         label={constructOptionalLabel("TELEGRAM")}
-        variant="outlined"
+        formControlProps={{
+          fullWidth: true,
+        }}
         sx={fieldStyles}
-        fullWidth
         icon={<Telegram />}
         {...register("telegram")}
+        onChange={(event) => {
+          setValue("telegram", event.target.value as string);
+          clearErrors("telegram");
+        }}
         ref={null}
         disabled={loading}
         errorMessage={getFieldError(errors.telegram)}
@@ -225,11 +241,16 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
 
       <SocialInput
         label={constructOptionalLabel("REDDIT")}
-        variant="outlined"
+        formControlProps={{
+          fullWidth: true,
+        }}
         sx={fieldStyles}
-        fullWidth
         icon={<Reddit />}
         {...register("reddit")}
+        onChange={(event) => {
+          setValue("reddit", event.target.value as string);
+          clearErrors("reddit");
+        }}
         ref={null}
         disabled={loading}
         errorMessage={getFieldError(errors.reddit)}
@@ -238,11 +259,16 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
 
       <SocialInput
         label={constructOptionalLabel("TWITTER")}
-        variant="outlined"
+        formControlProps={{
+          fullWidth: true,
+        }}
         sx={fieldStyles}
-        fullWidth
         icon={<Twitter />}
         {...register("twitter")}
+        onChange={(event) => {
+          setValue("twitter", event.target.value as string);
+          clearErrors("twitter");
+        }}
         ref={null}
         disabled={loading}
         errorMessage={getFieldError(errors.twitter)}

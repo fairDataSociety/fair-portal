@@ -1,3 +1,4 @@
+// TODO should be split into two models
 export interface Dapp {
   name: string;
   url: string;
@@ -13,6 +14,8 @@ export interface Dapp {
   telegram: string;
   reddit: string;
   twitter: string;
+  hash?: string;
+  verified?: string;
 }
 
 export const DappSchema: Dapp = {

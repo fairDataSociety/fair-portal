@@ -6,24 +6,28 @@ import {
   OutlinedInput,
   FormControlProps,
   FormHelperText,
+  OutlinedInputProps,
 } from "@mui/material";
 
 export interface SocialInputProps {
   label: string;
   icon: React.ReactElement;
   errorMessage?: string;
+  formControlProps: FormControlProps;
 }
 
 const SocialInput = ({
   label,
   icon,
   errorMessage,
+  formControlProps,
   ...rest
-}: SocialInputProps & FormControlProps) => {
+}: SocialInputProps & OutlinedInputProps) => {
   return (
-    <FormControl {...rest} error={Boolean(errorMessage)}>
+    <FormControl {...formControlProps} error={Boolean(errorMessage)}>
       <InputLabel htmlFor="input-with-icon-adornment">{label}</InputLabel>
       <OutlinedInput
+        {...rest}
         label={label}
         startAdornment={
           <InputAdornment position="start">{icon}</InputAdornment>

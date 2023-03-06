@@ -26,8 +26,6 @@ export function hashDappUrl(url: string): string {
 export async function registerDapp(url: string, record: Dapp): Promise<void> {
   const beesonRecord = new BeeSon({ json: record });
 
-  beesonRecord.superBeeSon = true;
-
   const { reference } = await bee.uploadData(
     import.meta.env.VITE_BATCH_ID,
     beesonRecord.serialize(),
@@ -48,12 +46,14 @@ export async function getDapp(swarmLocation: string): Promise<Dapp> {
 
   const dappSchema = new BeeSon({ json: DappSchema });
 
-  dappSchema.superBeeSon = true;
-
   // Checks data schema
   dappSchema.json = deserializedBeeson.json;
 
-  return deserializedBeeson.json;
+  const dapp = deserializedBeeson.json;
+
+  dapp.hash = swarmLocation;
+
+  return dapp;
 }
 
 export async function getDapps(start: number, length: number): Promise<Dapp[]> {
@@ -68,8 +68,10 @@ export async function getDapps(start: number, length: number): Promise<Dapp[]> {
     await Promise.all(
       records.map(async (record) => {
         try {
-          return await getDapp(record.location);
+          return getDapp(record.location);
         } catch (error) {
+          console.warn(error);
+
           return Promise.resolve(undefined);
         }
       })
