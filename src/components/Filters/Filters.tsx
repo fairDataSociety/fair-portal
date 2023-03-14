@@ -26,8 +26,10 @@ import { Category } from "../../model/Category";
 export interface FiltersProps {
   categories: Category[];
   selected: Category | null;
+  validatedOnly: boolean;
   onCategorySelect: (category: Category | null) => void;
   onSubcategorySelect: (subcategory: string) => void;
+  onValidatedOnlyChange?: (validatedOnly: boolean) => void;
 }
 
 const getCategoryIcon = (category: string): React.ReactElement => {
@@ -115,8 +117,10 @@ const SubFilter = ({
 const Filters = ({
   categories,
   selected,
+  validatedOnly,
   onCategorySelect,
   onSubcategorySelect,
+  onValidatedOnlyChange,
 }: FiltersProps) => {
   return (
     <List
@@ -152,6 +156,17 @@ const Filters = ({
           )}
         </Fragment>
       ))}
+      {Boolean(onValidatedOnlyChange) && (
+        <ListItemButton
+          onClick={() => (onValidatedOnlyChange as Function)(!validatedOnly)}
+        >
+          <ListItemText
+            primary={intl.get(
+              validatedOnly ? "SHOW_ALL" : "SHOW_VALIDATED_ONLY"
+            )}
+          />
+        </ListItemButton>
+      )}
     </List>
   );
 };

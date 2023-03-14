@@ -4,13 +4,14 @@ import { FieldError, useForm } from "react-hook-form";
 import { Button, LinearProgress, TextField, Tooltip } from "@mui/material";
 import GitHub from "@mui/icons-material/GitHub";
 import { Dapp } from "../../model/Dapp";
-import SocialInput from "../SocialInput/SocialInput";
+import SocialInput, { CustomImage } from "../SocialInput/SocialInput";
 import Web from "@mui/icons-material/Web";
 import Telegram from "@mui/icons-material/Telegram";
 import Reddit from "@mui/icons-material/Reddit";
 import Twitter from "@mui/icons-material/Twitter";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import CategorySelect from "../CategorySelect/CategorySelect";
+import DiscordSVG from "../../assets/images/discord-icon-svgrepo-com.svg";
 
 export interface DappFormProps {
   dapp: Dapp;
@@ -34,6 +35,7 @@ export interface DappFormFields {
   telegram: string;
   reddit: string;
   twitter: string;
+  discord: string;
 }
 
 const fieldStyles = {
@@ -237,6 +239,24 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
         disabled={loading}
         errorMessage={getFieldError(errors.telegram)}
         data-testid="telegram"
+      />
+
+      <SocialInput
+        label={constructOptionalLabel("DISCORD")}
+        formControlProps={{
+          fullWidth: true,
+        }}
+        sx={fieldStyles}
+        icon={<CustomImage src={DiscordSVG} />}
+        {...register("discord")}
+        onChange={(event) => {
+          setValue("discord", event.target.value as string);
+          clearErrors("discord");
+        }}
+        ref={null}
+        disabled={loading}
+        errorMessage={getFieldError(errors.discord)}
+        data-testid="discord"
       />
 
       <SocialInput

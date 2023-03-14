@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.10.5",
     "@ethersphere/bee-js": "^5.1.2",
     "@fairdatasociety/beeson": "^0.1.1",
+    "@fairdatasociety/fdp-contracts-js": "^2.0.2",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.5",
     "ethers": "^5.7.2",

@@ -36,6 +36,7 @@ export const Links = styled("div")({
 
 export const StyledLink = styled(Link)({
   textDecoration: "none",
+  color: "inherit",
 });
 
 const DappItem = ({

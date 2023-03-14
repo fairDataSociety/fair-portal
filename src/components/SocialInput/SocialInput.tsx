@@ -1,4 +1,5 @@
 import React from "react";
+import { styled } from "@mui/system";
 import {
   FormControl,
   InputAdornment,
@@ -15,6 +16,10 @@ export interface SocialInputProps {
   errorMessage?: string;
   formControlProps: FormControlProps;
 }
+
+export const CustomImage = styled("img")(() => ({
+  width: "20px",
+}));
 
 const SocialInput = ({
   label,

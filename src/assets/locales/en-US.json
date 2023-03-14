@@ -21,10 +21,15 @@
   "URL_TOOLTIP": "Relative URL of your dApp. For example: /example/dapp",
   "ENS_TOOLTIP": "Ethereum Name Service Name",
   "AUTHOR_ADDRESS_TOOLTIP": "Ethereum address. For example 0x12345...",
-  "DAPP_REGISTRATION_SUCCESS": "Congratulations, you have successfully registered your dApp.",
+  "DAPP_REGISTRATION_SUCCESS": "Congratulations, you have successfully registered your dApp. Validators will review your submission shortly.",
   "DISCONNECT": "Disconnect",
   "STORE": "Store",
   "CATEGORIES": "Categories",
   "CATEGORY": "Category",
-  "SUBCATEGORY": "Subcategory"
+  "SUBCATEGORY": "Subcategory",
+  "DISCORD": "Discord",
+  "SHOW_ALL": "Show Validated and Unvalidated",
+  "SHOW_VALIDATED_ONLY": "Show Validated Only",
+  "VALIDATE": "Validate",
+  "UNVALIDATE": "Unvalidate"
 }

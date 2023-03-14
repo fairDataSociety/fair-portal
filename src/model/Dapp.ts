@@ -14,8 +14,12 @@ export interface Dapp {
   telegram: string;
   reddit: string;
   twitter: string;
-  hash?: string;
-  verified?: string;
+  discord: string;
+}
+
+export interface LocalDapp extends Dapp {
+  hash: string;
+  validated: boolean;
 }
 
 export const DappSchema: Dapp = {
@@ -33,4 +37,5 @@ export const DappSchema: Dapp = {
   telegram: "",
   reddit: "",
   twitter: "",
+  discord: "",
 };
