@@ -1,13 +1,13 @@
 import React from "react";
 import { styled } from "@mui/system";
-import { Dapp } from "../../model/Dapp";
+import { LocalDapp } from "../../model/Dapp";
 import { CardContent, Paper, Typography } from "@mui/material";
 import DappLinks from "../../components/DappLinks/DappLinks";
 import RouteCodes from "../../routes/RouteCodes";
 import { Link } from "react-router-dom";
 
 export interface DappItemProps {
-  dapp: Dapp;
+  dapp: LocalDapp;
 }
 
 export const Logo = styled("img")({

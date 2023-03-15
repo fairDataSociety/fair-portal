@@ -1,10 +1,10 @@
 import React from "react";
 import { styled } from "@mui/system";
-import { Dapp } from "../../model/Dapp";
+import { LocalDapp } from "../../model/Dapp";
 import DappItem from "./DappItem";
 
 export interface DappGridProps {
-  dapps: Dapp[];
+  dapps: LocalDapp[];
 }
 
 export const DappList = styled("div")(({ theme }) => ({
