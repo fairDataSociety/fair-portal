@@ -1,6 +1,9 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import intl from "react-intl-universal";
 import {
+  Button,
+  Drawer,
+  Hidden,
   List,
   ListItemButton,
   ListItemIcon,
@@ -114,7 +117,7 @@ const SubFilter = ({
   </List>
 );
 
-const Filters = ({
+const FilterList = ({
   categories,
   selected,
   validatedOnly,
@@ -168,6 +171,29 @@ const Filters = ({
         </ListItemButton>
       )}
     </List>
+  );
+};
+
+const Filters = (props: FiltersProps) => {
+  const [open, setOpen] = useState<boolean>(false);
+
+  return (
+    <>
+      <Hidden smDown>
+        <FilterList {...props} />
+      </Hidden>
+      <Hidden smUp>
+        <Button
+          onClick={() => setOpen(true)}
+          sx={{ fontWeight: "bold", mb: "20px" }}
+        >
+          {intl.get("CATEGORIES")}
+        </Button>
+        <Drawer open={open} onClose={() => setOpen(false)}>
+          <FilterList {...props} />
+        </Drawer>
+      </Hidden>
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import DappGrid from "./DappGrid";
-import { Container } from "@mui/material";
+import { Container, LinearProgress } from "@mui/material";
 import Filters from "../../components/Filters/Filters";
 import { useDappContext } from "../../context/DappContext";
 import { useWalletContext } from "../../context/WalletContext";
@@ -19,7 +19,13 @@ const Home = (props: HomeProps) => {
     onValidatedChange,
   } = useDappContext();
   return (
-    <Container sx={{ display: "flex", margin: "20px auto" }}>
+    <Container
+      sx={{
+        display: "flex",
+        margin: "20px auto",
+        flexDirection: { sm: "row", xs: "column" },
+      }}
+    >
       <Filters
         categories={categories}
         selected={filter.category}
@@ -30,7 +36,11 @@ const Home = (props: HomeProps) => {
           connected && isValidator ? onValidatedChange : undefined
         }
       />
-      {loading ? null : <DappGrid dapps={filteredDapps} />}
+      {loading ? (
+        <LinearProgress color="secondary" sx={{ width: "100%", mt: "50px" }} />
+      ) : (
+        <DappGrid dapps={filteredDapps} />
+      )}
     </Container>
   );
 };

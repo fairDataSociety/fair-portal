@@ -14,8 +14,7 @@ export const Sidebar = styled("div")(({ theme }) => ({
   width: "30%",
   minHeight: "90vh",
   borderRight: `3px solid ${theme.palette.border.main}`,
-  background:
-    "linear-gradient(-45deg, #42a5f508 25px, transparent 1%), #fcfcfd",
+  background: `linear-gradient(-45deg, ${theme.palette.primary.light} 25px, transparent 1%), ${theme.palette.primary.dark}`,
   backgroundSize: "50px 50px",
   [theme.breakpoints.down("sm")]: {
     display: "none",

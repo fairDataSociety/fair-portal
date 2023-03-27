@@ -5,6 +5,7 @@ import Logo from "./Logo";
 import { useDappContext } from "../../context/DappContext";
 import AccountSection from "./AccountSection";
 import Links from "./Links";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 export interface AppHeaderProps {}
 
@@ -36,7 +37,6 @@ const AppHeader = (props: AppHeaderProps) => {
         margin: 0,
         borderRadius: 0,
         zIndex: 1,
-        backgroundColor: palette.primary[palette.mode],
       }}
     >
       <InnerWrapper>
@@ -45,6 +45,7 @@ const AppHeader = (props: AppHeaderProps) => {
           <Links />
           {/* <SearchInput onChange={(e) => onSearch(e.target.value)} /> */}
           <AccountSection />
+          <ThemeToggle />
         </LinksWrapper>
       </InnerWrapper>
     </Paper>

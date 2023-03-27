@@ -5,11 +5,11 @@ import { LinkProps, NavLink } from "react-router-dom";
 export const StyledLink = styled(NavLink)(({ theme }) => ({
   textTransform: "uppercase",
   textDecoration: "none",
-  color: theme.palette.link.main,
   marginRight: "10px",
   fontWeight: "bolder",
+  color: theme.palette.primary.contrastText,
   "&:hover": {
-    color: theme.palette.link.dark,
+    color: theme.palette.secondary.dark,
   },
   "&.active": {
     textDecoration: "underline",

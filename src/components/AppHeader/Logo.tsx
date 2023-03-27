@@ -4,11 +4,7 @@ import { Typography, useTheme } from "@mui/material";
 const Logo = () => {
   const { palette } = useTheme();
   return (
-    <Typography
-      variant="h4"
-      fontWeight="bold"
-      sx={{ color: palette.primary.main }}
-    >
+    <Typography variant="h4" fontWeight="bold">
       Fair Portal
     </Typography>
   );

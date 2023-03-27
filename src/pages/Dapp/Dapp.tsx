@@ -9,8 +9,10 @@ import {
   Button,
   Chip,
   CircularProgress,
+  LinearProgress,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import DappLinks from "../../components/DappLinks/DappLinks";
 import { useWalletContext } from "../../context/WalletContext";
@@ -21,7 +23,6 @@ export const Wrapper = styled("div")(({ theme }) => ({
   maxWidth: "800px",
   margin: "0 auto",
   display: "flex",
-  flexDirection: "row",
   paddingTop: "20px",
 }));
 
@@ -34,13 +35,14 @@ export const Logo = styled("img")({
 
 export const Content = styled("div")(({ theme }) => ({
   display: "flex",
-  marginLeft: "50px",
+  margin: "0 50px",
   flexDirection: "column",
 }));
 
 const Dapp = () => {
   const { hash } = useParams();
   const navigate = useNavigate();
+  const theme = useTheme();
   const { connected, isValidator } = useWalletContext();
   const { validatedRecords, reload } = useDappContext();
   const [dapp, setDapp] = useState<LocalDapp | null>(null);
@@ -90,10 +92,18 @@ const Dapp = () => {
   }, []);
 
   return (
-    <Wrapper>
-      {dapp && (
+    <Wrapper
+      sx={{
+        minWidth: "800px",
+        flexDirection: { md: "row", sm: "column", xs: "column" },
+      }}
+    >
+      {dapp ? (
         <>
-          <Logo src={dapp.logo} />
+          <Logo
+            src={dapp.logo}
+            sx={{ marginLeft: { md: 0, sm: "50px", xs: "50px" } }}
+          />
           <Content>
             {error && <ErrorMessage>{error}</ErrorMessage>}
             <Typography variant="h3">{dapp.name}</Typography>
@@ -112,7 +122,13 @@ const Dapp = () => {
               label={dapp.category}
             />
             <a href="dapp.url" target="_blank">
-              <Typography variant="body1" sx={{ marginBottom: "10px" }}>
+              <Typography
+                variant="body1"
+                sx={{
+                  marginBottom: "10px",
+                  color: theme.palette.secondary.dark,
+                }}
+              >
                 {dapp.url}
               </Typography>
             </a>
@@ -151,6 +167,8 @@ const Dapp = () => {
             )}
           </Content>
         </>
+      ) : (
+        <LinearProgress color="secondary" sx={{ width: "100%", mt: "100px" }} />
       )}
     </Wrapper>
   );
