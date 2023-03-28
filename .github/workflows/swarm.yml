@@ -22,7 +22,7 @@ jobs:
       - name: set vars per branch
         id: vars
         run: |
-          if [ "$GITHUB_REF_NAME" == 'master' ]; then
+          if [ "$GITHUB_REF_NAME" == 'main' ]; then
               echo "VITE_ENVIRONMENT=GOERLI" >> "$GITHUB_ENV"
               echo "VITE_BEE_URL=https://bee-1.fairdatasociety.org" >> "$GITHUB_ENV"
               echo "VITE_BATCH_ID=0" >> "$GITHUB_ENV"
@@ -63,7 +63,7 @@ jobs:
         run: npm install
       - name: copy vars to .env
         run: |
-          env |grep 'VITE' > .env
+          env | grep 'VITE' > .env
       - name: build
         run: npm run build
         env:
