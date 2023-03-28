@@ -8,7 +8,6 @@ const ThemeToggle = (props: IconButtonProps) => {
   const { themeType, changeTheme } = useThemeContext();
   return (
     <IconButton
-      color="secondary"
       onClick={() => changeTheme(themeType === "light" ? "dark" : "light")}
       {...props}
     >

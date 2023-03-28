@@ -37,6 +37,7 @@ export const ThemeContextProvider = ({
   const changeTheme = (theme: ThemeType) => {
     setTheme(theme === "light" ? lightTheme : darkTheme);
     setThemeType(theme);
+    localStorage.setItem("theme", theme);
   };
 
   return (

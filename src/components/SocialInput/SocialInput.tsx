@@ -17,7 +17,8 @@ export interface SocialInputProps {
   formControlProps: FormControlProps;
 }
 
-export const CustomImage = styled("img")(() => ({
+export const CustomImage = styled("img")(({ theme }) => ({
+  color: theme.palette.primary.light,
   width: "20px",
 }));
 

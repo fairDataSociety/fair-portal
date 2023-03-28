@@ -10,6 +10,7 @@ import {
   ListItemText,
   ListSubheader,
   Typography,
+  useTheme,
 } from "@mui/material";
 import BusinessCenter from "@mui/icons-material/BusinessCenter";
 import SportsEsports from "@mui/icons-material/SportsEsports";
@@ -175,6 +176,7 @@ const FilterList = ({
 };
 
 const Filters = (props: FiltersProps) => {
+  const theme = useTheme();
   const [open, setOpen] = useState<boolean>(false);
 
   return (
@@ -185,11 +187,16 @@ const Filters = (props: FiltersProps) => {
       <Hidden smUp>
         <Button
           onClick={() => setOpen(true)}
+          color="secondary"
           sx={{ fontWeight: "bold", mb: "20px" }}
         >
           {intl.get("CATEGORIES")}
         </Button>
-        <Drawer open={open} onClose={() => setOpen(false)}>
+        <Drawer
+          open={open}
+          onClose={() => setOpen(false)}
+          sx={{ height: "100%", backgroundColor: theme.palette.primary.dark }}
+        >
           <FilterList {...props} />
         </Drawer>
       </Hidden>

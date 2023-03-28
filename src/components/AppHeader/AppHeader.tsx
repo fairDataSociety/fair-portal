@@ -10,7 +10,7 @@ import ThemeToggle from "../ThemeToggle/ThemeToggle";
 export interface AppHeaderProps {}
 
 export const InnerWrapper = styled("div")(({ theme }) => ({
-  width: "1200px",
+  width: "100%",
   margin: "auto",
   display: "flex",
   alignItems: "center",

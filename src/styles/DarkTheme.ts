@@ -5,14 +5,15 @@ const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: colors.shadeDark2Night,
-      light: colors.shadeDark1Night,
+      main: colors.shadeLight3Night,
+      light: colors.shadeLight3Night,
       dark: colors.shadeDark3Night,
+      contrastText: colors.shadeLight1Night,
     },
     secondary: {
-      main: colors.shadeLight2Night,
-      light: colors.shadeLight1Night,
-      dark: colors.shadeLight3Night,
+      main: colors.shadeLight3Night,
+      light: colors.shadeLight2Night,
+      dark: colors.shadeDark2Night,
     },
     border: {
       main: "#ddd",

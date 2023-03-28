@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
 import AppHeader from "../AppHeader/AppHeader";
+import Footer from "../Footer/Footer";
 
 export interface AppLayoutProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
     <Wrapper>
       <AppHeader />
       {children}
+      <Footer />
     </Wrapper>
   );
 };

@@ -5,14 +5,15 @@ const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: colors.shadeDark1Day,
-      light: colors.shadeDark2Day,
-      dark: colors.shadeDark3Day,
+      main: colors.shadeLight3Day,
+      light: colors.shadeLight3Day,
+      dark: colors.shadeLight1Night,
+      contrastText: colors.shadeLight3Night,
     },
     secondary: {
       main: colors.shadeLight1Night,
-      light: colors.shadeLight2Night,
-      dark: colors.shadeLight3Night,
+      light: colors.shadeWhiteNight,
+      dark: colors.shadeLight2Night,
     },
     border: {
       main: "#ddd",
