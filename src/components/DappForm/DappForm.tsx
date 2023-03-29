@@ -1,17 +1,23 @@
 import React from "react";
 import intl from "react-intl-universal";
 import { FieldError, useForm } from "react-hook-form";
-import { Button, LinearProgress, TextField, Tooltip } from "@mui/material";
+import {
+  Button,
+  LinearProgress,
+  TextField,
+  Tooltip,
+  useTheme,
+} from "@mui/material";
 import GitHub from "@mui/icons-material/GitHub";
 import { Dapp } from "../../model/Dapp";
-import SocialInput, { CustomImage } from "../SocialInput/SocialInput";
+import SocialInput from "../SocialInput/SocialInput";
 import Web from "@mui/icons-material/Web";
 import Telegram from "@mui/icons-material/Telegram";
 import Reddit from "@mui/icons-material/Reddit";
 import Twitter from "@mui/icons-material/Twitter";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import CategorySelect from "../CategorySelect/CategorySelect";
-import DiscordSVG from "../../assets/images/discord-icon-svgrepo-com.svg";
+import DiscordLogo from "../DiscordLogo/DiscordLogo";
 
 export interface DappFormProps {
   dapp: Dapp;
@@ -50,6 +56,7 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
     setValue,
     clearErrors,
   } = useForm<DappFormFields>();
+  const theme = useTheme();
 
   const getFieldError = (
     error: FieldError | undefined,
@@ -193,7 +200,7 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
         }}
         sx={fieldStyles}
         fullWidth
-        icon={<Web />}
+        icon={<Web style={{ fill: theme.palette.primary.contrastText }} />}
         {...register("website")}
         onChange={(event) => {
           setValue("website", event.target.value as string);
@@ -207,7 +214,7 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
 
       <SocialInput
         label={constructOptionalLabel("GITHUB_REPO")}
-        icon={<GitHub />}
+        icon={<GitHub style={{ fill: theme.palette.primary.contrastText }} />}
         formControlProps={{
           fullWidth: true,
         }}
@@ -229,7 +236,7 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
           fullWidth: true,
         }}
         sx={fieldStyles}
-        icon={<Telegram />}
+        icon={<Telegram style={{ fill: theme.palette.primary.contrastText }} />}
         {...register("telegram")}
         onChange={(event) => {
           setValue("telegram", event.target.value as string);
@@ -247,7 +254,9 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
           fullWidth: true,
         }}
         sx={fieldStyles}
-        icon={<CustomImage src={DiscordSVG} />}
+        icon={
+          <DiscordLogo style={{ fill: theme.palette.primary.contrastText }} />
+        }
         {...register("discord")}
         onChange={(event) => {
           setValue("discord", event.target.value as string);
@@ -265,7 +274,7 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
           fullWidth: true,
         }}
         sx={fieldStyles}
-        icon={<Reddit />}
+        icon={<Reddit style={{ fill: theme.palette.primary.contrastText }} />}
         {...register("reddit")}
         onChange={(event) => {
           setValue("reddit", event.target.value as string);
@@ -283,7 +292,7 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
           fullWidth: true,
         }}
         sx={fieldStyles}
-        icon={<Twitter />}
+        icon={<Twitter style={{ fill: theme.palette.primary.contrastText }} />}
         {...register("twitter")}
         onChange={(event) => {
           setValue("twitter", event.target.value as string);

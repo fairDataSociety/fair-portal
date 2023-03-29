@@ -32,7 +32,7 @@ const CategorySelect = ({ disabled, error, ...props }: SelectProps) => {
 
   return (
     <>
-      <FormControl sx={fieldStyles} fullWidth>
+      <FormControl sx={fieldStyles} error={error && !category} fullWidth>
         <InputLabel>{intl.get("CATEGORY")}</InputLabel>
         <Select
           value={category?.name}
