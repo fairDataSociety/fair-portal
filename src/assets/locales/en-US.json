@@ -18,7 +18,7 @@
   "INVALID_VALUE": "Invalid field value.",
   "MINIMAL_LENGTH_ERROR": "The value must be minumum {length} characters long.",
   "REGISTER_DAPP_TITLE": "Register your Fair Data dApp",
-  "URL_TOOLTIP": "Relative URL of your dApp. For example: /example/dapp",
+  "URL_TOOLTIP": "Either a BZZ link of the dApp or a full URL for dApps that use a public pod. For example: /bzz/{hash} or https://fairos.fairdatasociety.org/public/{hash}/",
   "ENS_TOOLTIP": "Ethereum Name Service Name",
   "AUTHOR_ADDRESS_TOOLTIP": "Ethereum address. For example 0x12345...",
   "DAPP_REGISTRATION_SUCCESS": "Congratulations, you have successfully registered your dApp. Validators will review your submission shortly.",

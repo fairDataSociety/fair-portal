@@ -105,14 +105,14 @@ const SubFilter = ({
         sx={{ pl: 4 }}
         onClick={() => onSelect(subcategory)}
       >
-        <ListItemIcon
-          sx={{
-            visibility: selected.includes(subcategory) ? "visible" : "hidden",
+        <ListItemText
+          primary={subcategory}
+          primaryTypographyProps={{
+            sx: {
+              fontWeight: selected.includes(subcategory) ? "bold" : "normal",
+            },
           }}
-        >
-          <Check />
-        </ListItemIcon>
-        <ListItemText primary={subcategory} />
+        />
       </ListItemButton>
     ))}
   </List>

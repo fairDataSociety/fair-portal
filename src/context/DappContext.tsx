@@ -5,6 +5,8 @@ import { getDapps, getValidatedRecords } from "../storage/dapp-registry";
 import categories from "../assets/data/categories.json";
 import { Category } from "../model/Category";
 import { DappRecord } from "@fairdatasociety/fdp-contracts-js/build/types/model/dapp-record.model";
+import { useNavigate } from "react-router-dom";
+import RouteCodes from "../routes/RouteCodes";
 
 export interface DappFilters {
   search: string;
@@ -51,6 +53,7 @@ export interface DappContextProviderProps {
 }
 
 export const DappContextProvider = ({ children }: DappContextProviderProps) => {
+  const navigate = useNavigate();
   const [allDapps, setAllDapps] = useState<LocalDapp[]>([]);
   const [validatedRecords, setValidatedRecords] = useState<
     Record<string, DappRecord>
@@ -99,24 +102,20 @@ export const DappContextProvider = ({ children }: DappContextProviderProps) => {
       ...filter,
       category: filterCategory,
     });
+
+    navigate(RouteCodes.home);
   };
 
   const onSubcategorySelect = (subcategory: string) => {
     const category = { ...(filter.category as Category) };
-    category.subcategories = [...category.subcategories];
-
-    const index = category.subcategories.indexOf(subcategory);
-
-    if (index >= 0) {
-      category.subcategories.splice(index, 1);
-    } else {
-      category.subcategories.push(subcategory);
-    }
+    category.subcategories = [subcategory];
 
     setFilter({
       ...filter,
       category,
     });
+
+    navigate(RouteCodes.home);
   };
 
   const onSearch = (search: string) => {

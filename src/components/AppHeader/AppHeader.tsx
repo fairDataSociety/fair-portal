@@ -1,8 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
-import { Paper, useTheme } from "@mui/material";
+import { Paper } from "@mui/material";
 import Logo from "./Logo";
-import { useDappContext } from "../../context/DappContext";
 import AccountSection from "./AccountSection";
 import Links from "./Links";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
@@ -26,8 +25,6 @@ export const LinksWrapper = styled("div")({
 });
 
 const AppHeader = (props: AppHeaderProps) => {
-  const { palette } = useTheme();
-  const { onSearch } = useDappContext();
   return (
     <Paper
       elevation={3}
@@ -43,7 +40,6 @@ const AppHeader = (props: AppHeaderProps) => {
         <Logo />
         <LinksWrapper>
           <Links />
-          {/* <SearchInput onChange={(e) => onSearch(e.target.value)} /> */}
           <AccountSection />
           <ThemeToggle />
         </LinksWrapper>

@@ -1,10 +1,19 @@
 import React, { useState } from "react";
+import { styled } from "@mui/system";
 import intl from "react-intl-universal";
-import FormWrapper from "../../components/FormWrapper/FormWrapper";
 import DappForm, { DappFormFields } from "../../components/DappForm/DappForm";
 import { Dapp } from "../../model/Dapp";
 import { Typography } from "@mui/material";
 import { registerDapp } from "../../storage/dapp-registry";
+
+export const Wrapper = styled("div")(({ theme }) => ({
+  display: "flex",
+  padding: "20px",
+  width: "500px",
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+  },
+}));
 
 const initialDapp: Dapp = {
   name: "",
@@ -65,25 +74,20 @@ const RegisterDapp = () => {
   };
 
   return (
-    <FormWrapper>
+    <Wrapper>
       {done ? (
         <Typography variant="h6" sx={{ marginBottom: "20px" }}>
           {intl.get("DAPP_REGISTRATION_SUCCESS")}
         </Typography>
       ) : (
-        <>
-          <Typography variant="h6" sx={{ marginBottom: "20px" }}>
-            {intl.get("REGISTER_DAPP_TITLE")}
-          </Typography>
-          <DappForm
-            dapp={initialDapp}
-            loading={loading}
-            error={error}
-            onSubmit={onRegister}
-          />
-        </>
+        <DappForm
+          dapp={initialDapp}
+          loading={loading}
+          error={error}
+          onSubmit={onRegister}
+        />
       )}
-    </FormWrapper>
+    </Wrapper>
   );
 };
 

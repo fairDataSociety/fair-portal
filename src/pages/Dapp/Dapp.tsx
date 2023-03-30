@@ -24,6 +24,10 @@ export const Wrapper = styled("div")(({ theme }) => ({
   margin: "0 auto",
   display: "flex",
   paddingTop: "20px",
+  flexDirection: "row",
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+  },
 }));
 
 export const Logo = styled("img")({
@@ -92,12 +96,7 @@ const Dapp = () => {
   }, []);
 
   return (
-    <Wrapper
-      sx={{
-        minWidth: "800px",
-        flexDirection: { md: "row", sm: "column", xs: "column" },
-      }}
-    >
+    <Wrapper>
       {dapp ? (
         <>
           <Logo

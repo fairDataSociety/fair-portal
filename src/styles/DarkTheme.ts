@@ -1,12 +1,14 @@
 import { createTheme } from "@mui/material";
 import { colors } from "./colors";
+import commonTheme from "./CommonTheme";
 
 const darkTheme = createTheme({
+  ...commonTheme,
   palette: {
     mode: "dark",
     primary: {
-      main: colors.shadeLight3Night,
-      light: colors.shadeLight3Night,
+      main: colors.shadeLight2Night,
+      light: colors.shadeLight2Night,
       dark: colors.shadeDark3Night,
       contrastText: colors.shadeLight1Night,
     },

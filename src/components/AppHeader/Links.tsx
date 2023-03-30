@@ -7,14 +7,13 @@ import HeaderLink from "./Link";
 
 export const Wrapper = styled("div")({
   display: "flex",
-  marginLeft: "auto",
+  marginLeft: "10px",
 });
 
 const Links = () => {
   const { connected } = useWalletContext();
   return (
     <Wrapper>
-      <HeaderLink to={RouteCodes.home}>{intl.get("STORE")}</HeaderLink>
       {connected && (
         <HeaderLink to={RouteCodes.registerDapp}>
           {intl.get("REGISTER")}

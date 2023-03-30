@@ -51,12 +51,12 @@ export const WalletContextProvider = ({
       dappRegistry.connect(signerOrProvider);
       setAddress(address);
 
-      const [isValidator, isAdmin] = await Promise.all([
-        dappRegistry.isValidator(address),
-        dappRegistry.isAdmin(address),
-      ]);
+      const isAdmin = await dappRegistry.isAdmin(address);
 
-      setRoles({ isValidator, isAdmin });
+      setRoles({
+        isValidator: address === import.meta.env.VITE_FDP_ADDRESS,
+        isAdmin,
+      });
     } catch (error) {
       removeWallet();
       throw error;

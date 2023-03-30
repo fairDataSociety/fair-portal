@@ -1,12 +1,24 @@
 import React from "react";
-import { Typography, useTheme } from "@mui/material";
+import { styled } from "@mui/system";
+import { Typography } from "@mui/material";
+import { NavLink } from "react-router-dom";
+import RouteCodes from "../../routes/RouteCodes";
+
+export const LogoLink = styled(NavLink)(({ theme }) => ({
+  textDecoration: "none",
+  color: theme.palette.primary.contrastText,
+  "&:hover": {
+    color: theme.palette.secondary.dark,
+  },
+}));
 
 const Logo = () => {
-  const { palette } = useTheme();
   return (
-    <Typography variant="h4" fontWeight="bold">
-      Fair Portal
-    </Typography>
+    <LogoLink to={RouteCodes.home}>
+      <Typography variant="h4" fontWeight="bold">
+        Fair Portal
+      </Typography>
+    </LogoLink>
   );
 };
 

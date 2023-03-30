@@ -1,7 +1,9 @@
 import { createTheme } from "@mui/material";
 import { colors } from "./colors";
+import commonTheme from "./CommonTheme";
 
 const lightTheme = createTheme({
+  ...commonTheme,
   palette: {
     mode: "light",
     primary: {

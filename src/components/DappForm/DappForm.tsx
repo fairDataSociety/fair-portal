@@ -96,11 +96,11 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
       />
       <Tooltip title={intl.get("ENS_TOOLTIP")} arrow>
         <TextField
-          label={intl.get("ENS")}
+          label={constructOptionalLabel("ENS")}
           variant="outlined"
           sx={fieldStyles}
           fullWidth
-          {...register("ens", { required: true })}
+          {...register("ens")}
           disabled={loading}
           error={Boolean(errors.ens)}
           helperText={getFieldError(errors.ens)}

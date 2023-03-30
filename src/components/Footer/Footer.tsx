@@ -1,40 +1,110 @@
 import React from "react";
 import { styled } from "@mui/system";
-import { Typography } from "@mui/material";
-import FDSLogo from "../../assets/images/fds_logo.jpg";
+import { Grid, Link as MuiLink, Typography } from "@mui/material";
+import fdsLogo from "../../assets/images/fds_logo.jpg";
+import swarmLogo from "../../assets/images/swarm-logo-2.svg";
 
-export const Wrapper = styled("div")(({ theme }) => ({
-  display: "flex",
-  position: "fixed",
-  bottom: 0,
+const Wrapper = styled("div")(({ theme }) => ({
   width: "100%",
-  height: "50px",
-  backgroundColor: theme.palette.secondary.main,
-  zIndex: 10,
+  marginTop: "auto",
+  paddingTop: "50px",
 }));
 
-export const InnerWrapper = styled("div")({
+const InnerWrapper = styled("div")(({ theme }) => ({
+  width: "100%",
+  padding: "20px 40px",
+  boxShadow: "inset 0px 7px 10px 0px rgba(25,117,210,0.24)",
+}));
+
+const Logo = styled("img")(() => ({
+  width: "30px",
+}));
+
+const Column = styled("div")(({ theme }) => ({
   display: "flex",
-  margin: "auto",
+  flexDirection: "column",
+  alignItems: "center",
+  "& > *": {
+    marginBottom: "10px !important",
+  },
+}));
+
+const Lowercase = styled("span")({
+  textTransform: "lowercase",
 });
 
-export const FDSLogoImg = styled("img")({
-  margin: "auto",
-  width: "40px",
-});
+const Link = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: JSX.Element | string;
+}) => (
+  <MuiLink href={href} underline="hover" color="primary" target="_blank">
+    {children}
+  </MuiLink>
+);
 
 const Footer = () => {
   return (
     <Wrapper>
       <InnerWrapper>
-        <FDSLogoImg src={FDSLogo} />
-        <Typography
-          fontStyle="italic"
-          variant="h6"
-          sx={{ margin: "auto 0 auto 10px" }}
-        >
-          Fair Data Society
-        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6} md={3} alignContent="center">
+            <Column>
+              <Typography variant="h6">ABOUT</Typography>
+              <Link href="https://fairdatasociety.org/">
+                <Logo src={fdsLogo} sx={{ width: "50px" }} />
+              </Link>
+              <Link href="https://www.ethswarm.org/">
+                <Logo src={swarmLogo} />
+              </Link>
+              <Link href="https://github.com/fairDataSociety/fdp-create-account">
+                <>
+                  {import.meta.env.VITE_APP_VERSION}{" "}
+                  <Lowercase>{import.meta.env.VITE_ENVIRONMENT}</Lowercase>
+                </>
+              </Link>
+            </Column>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <Column>
+              <Typography variant="h6">COMMUNITY</Typography>
+              <Link href="https://fairdataprotocol.bzz.link/">Ecosystem</Link>
+              <Link href="https://twitter.com/fairdatasociety">Twitter</Link>
+              <Link href="https://discord.com/channels/888359049551310869/940628803250704394">
+                Discord
+              </Link>
+            </Column>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <Column>
+              <Typography variant="h6">RESOURCES</Typography>
+              <Link href="https://fairdataprotocol.bzz.link/">
+                Documentation
+              </Link>
+              <Link href="https://github.com/fairDataSociety/fdp-create-account">
+                Github
+              </Link>
+              <Link href="https://fairdatasociety.bzz.link/">Blog</Link>
+            </Column>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <Column>
+              <Typography variant="h6">EXTENSIONS</Typography>
+              <Link href="https://chrome.google.com/webstore/detail/blossom/caedjloenbhibmaeffockkiallpngmmd">
+                Blossom
+              </Link>
+              <Link href="https://chrome.google.com/webstore/detail/ethereum-swarm-extension/afpgelfcknfbbfnipnomfdbbnbbemnia">
+                Swarm
+              </Link>
+              <Typography variant="h6">LIBRARY</Typography>
+              <Link href="https://github.com/fairDataSociety/blossom/tree/master/library">
+                Blossom library github
+              </Link>
+            </Column>
+          </Grid>
+        </Grid>
       </InnerWrapper>
     </Wrapper>
   );
