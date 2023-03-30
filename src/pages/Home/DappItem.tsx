@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { LocalDapp } from "../../model/Dapp";
-import { CardContent, Paper, Typography } from "@mui/material";
+import { CardContent, Chip, Paper, Typography } from "@mui/material";
 import DappLinks from "../../components/DappLinks/DappLinks";
 import RouteCodes from "../../routes/RouteCodes";
 import { Link } from "react-router-dom";
@@ -45,6 +45,7 @@ const DappItem = ({
     authorName,
     logo,
     shortDescription,
+    category,
     hash,
     website,
     github,
@@ -61,7 +62,7 @@ const DappItem = ({
         display: "flex",
         flexDirection: "column",
         padding: "10px",
-        height: "200px",
+        height: "220px",
         backgroundColor: "#8888881c",
       }}
     >
@@ -99,6 +100,17 @@ const DappItem = ({
             telegram={telegram}
           />
         </Links>
+        <Chip
+          sx={{
+            width: "fit-content",
+            padding: "0",
+            marginLeft: "auto",
+            position: "absolute",
+            right: "5px",
+            bottom: "5px",
+          }}
+          label={category}
+        />
       </CardContent>
     </Paper>
   );
