@@ -52,6 +52,7 @@ const DappItem = ({
     reddit,
     twitter,
     telegram,
+    validated,
   },
 }: DappItemProps) => {
   return (
@@ -63,7 +64,7 @@ const DappItem = ({
         flexDirection: "column",
         padding: "10px",
         height: "220px",
-        backgroundColor: "#8888881c",
+        backgroundColor: validated ? "#8888881c" : "#87004d",
       }}
     >
       <StyledLink to={RouteCodes.dapp.replace(":hash", hash as string)}>

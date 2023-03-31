@@ -21,8 +21,8 @@ const lightTheme = createTheme({
       main: "#ddd",
     },
     link: {
-      main: "#eee",
-      dark: "#888",
+      main: colors.statusComponentsDay,
+      dark: colors.statusComponentsDay,
     },
   },
 });

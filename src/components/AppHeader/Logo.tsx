@@ -8,7 +8,7 @@ export const LogoLink = styled(NavLink)(({ theme }) => ({
   textDecoration: "none",
   color: theme.palette.primary.contrastText,
   "&:hover": {
-    color: theme.palette.secondary.dark,
+    color: theme.palette.secondary.main,
   },
 }));
 

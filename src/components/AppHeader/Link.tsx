@@ -9,7 +9,7 @@ export const StyledLink = styled(NavLink)(({ theme }) => ({
   fontWeight: "bolder",
   color: theme.palette.primary.contrastText,
   "&:hover": {
-    color: theme.palette.secondary.dark,
+    color: theme.palette.secondary.main,
   },
   "&.active": {
     textDecoration: "underline",

@@ -109,6 +109,7 @@ const SubFilter = ({
           primary={subcategory}
           primaryTypographyProps={{
             sx: {
+              fontSize: "14px",
               fontWeight: selected.includes(subcategory) ? "bold" : "normal",
             },
           }}

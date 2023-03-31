@@ -32,8 +32,8 @@ const DappLinks = ({
   return (
     <>
       {website && renderDappLink(website, <Web />)}
-      {github && renderDappLink(website, <GitHub />)}
-      {reddit && renderDappLink(website, <Reddit />)}
+      {github && renderDappLink(github, <GitHub />)}
+      {reddit && renderDappLink(reddit, <Reddit />)}
       {twitter && renderDappLink(twitter, <Twitter />)}
       {telegram && renderDappLink(website, <Telegram />)}
     </>

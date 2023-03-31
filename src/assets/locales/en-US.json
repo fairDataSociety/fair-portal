@@ -12,7 +12,7 @@
   "TELEGRAM": "Telegram Channel",
   "REDDIT": "Reddit",
   "TWITTER": "Twitter",
-  "REGISTER": "Register",
+  "REGISTER": "Register Your dApp",
   "OPTIONAL": "Optional",
   "REQUIRED_ERROR": "This field is required.",
   "INVALID_VALUE": "Invalid field value.",
@@ -22,6 +22,7 @@
   "ENS_TOOLTIP": "Ethereum Name Service Name",
   "AUTHOR_ADDRESS_TOOLTIP": "Ethereum address. For example 0x12345...",
   "DAPP_REGISTRATION_SUCCESS": "Congratulations, you have successfully registered your dApp. Validators will review your submission shortly.",
+  "CONNECT": "Connect",
   "DISCONNECT": "Disconnect",
   "STORE": "Store",
   "CATEGORIES": "Categories",
@@ -31,5 +32,6 @@
   "SHOW_ALL": "Show Validated and Unvalidated",
   "SHOW_VALIDATED_ONLY": "Show Validated Only",
   "VALIDATE": "Validate",
-  "UNVALIDATE": "Unvalidate"
+  "UNVALIDATE": "Unvalidate",
+  "EDIT": "Edit"
 }

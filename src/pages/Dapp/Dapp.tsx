@@ -43,6 +43,11 @@ export const Content = styled("div")(({ theme }) => ({
   flexDirection: "column",
 }));
 
+export const StyledLink = styled("a")(({ theme }) => ({
+  color: theme.palette.link.main,
+  marginBottom: "10px",
+}));
+
 const Dapp = () => {
   const { hash } = useParams();
   const navigate = useNavigate();
@@ -120,17 +125,9 @@ const Dapp = () => {
               }}
               label={dapp.category}
             />
-            <a href="dapp.url" target="_blank">
-              <Typography
-                variant="body1"
-                sx={{
-                  marginBottom: "10px",
-                  color: theme.palette.secondary.dark,
-                }}
-              >
-                {dapp.url}
-              </Typography>
-            </a>
+            <StyledLink href="dapp.url" target="_blank">
+              {dapp.url}
+            </StyledLink>
             <Typography
               variant="body1"
               fontStyle="italic"
@@ -138,7 +135,16 @@ const Dapp = () => {
             >
               ENS: {dapp.ens}
             </Typography>
-            <Typography sx={{ marginBottom: "20px" }} variant="body1">
+            <Typography
+              sx={{ marginBottom: "20px", overflowWrap: "anywhere" }}
+              variant="body1"
+            >
+              {dapp.shortDescription}
+            </Typography>
+            <Typography
+              sx={{ marginBottom: "20px", overflowWrap: "anywhere" }}
+              variant="body1"
+            >
               {dapp.longDescription}
             </Typography>
             <div>
