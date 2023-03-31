@@ -12,7 +12,8 @@
   "TELEGRAM": "Telegram Channel",
   "REDDIT": "Reddit",
   "TWITTER": "Twitter",
-  "REGISTER": "Register Your dApp",
+  "REGISTER": "Register",
+  "REGISTER_YOUR_DAPP": "Register Your dApp",
   "OPTIONAL": "Optional",
   "REQUIRED_ERROR": "This field is required.",
   "INVALID_VALUE": "Invalid field value.",
@@ -33,5 +34,6 @@
   "SHOW_VALIDATED_ONLY": "Show Validated Only",
   "VALIDATE": "Validate",
   "UNVALIDATE": "Unvalidate",
-  "EDIT": "Edit"
+  "EDIT": "Edit",
+  "EDITING_NOTE": "Note: Editing a dApp requires two transactions. One for deleting the old record and second for creating a new one."
 }

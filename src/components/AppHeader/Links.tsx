@@ -16,7 +16,7 @@ const Links = () => {
     <Wrapper>
       {connected && (
         <HeaderLink to={RouteCodes.registerDapp}>
-          {intl.get("REGISTER")}
+          {intl.get("REGISTER_YOUR_DAPP")}
         </HeaderLink>
       )}
     </Wrapper>

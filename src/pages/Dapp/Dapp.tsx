@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import intl from "react-intl-universal";
 import { styled } from "@mui/system";
 import { LocalDapp } from "../../model/Dapp";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import dappRegistry, { getDapp } from "../../storage/dapp-registry";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import {
@@ -52,7 +52,7 @@ const Dapp = () => {
   const { hash } = useParams();
   const navigate = useNavigate();
   const theme = useTheme();
-  const { connected, isValidator } = useWalletContext();
+  const { connected, isAdmin, isValidator, address } = useWalletContext();
   const { validatedRecords, reload } = useDappContext();
   const [dapp, setDapp] = useState<LocalDapp | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -170,10 +170,24 @@ const Dapp = () => {
                 )}
               </Button>
             )}
+            {connected && (address === dapp.authorAddress || isAdmin) && (
+              <Button
+                component={NavLink}
+                to={RouteCodes.editDapp.replace(":hash", dapp.hash)}
+                fullWidth={false}
+                color="secondary"
+                variant="contained"
+                sx={{ marginTop: "20px" }}
+              >
+                {intl.get("EDIT")}
+              </Button>
+            )}
           </Content>
         </>
+      ) : error ? (
+        <ErrorMessage>{error}</ErrorMessage>
       ) : (
-        <LinearProgress color="secondary" sx={{ width: "100%", mt: "100px" }} />
+        <LinearProgress color="secondary" sx={{ width: "100%", mt: "50px" }} />
       )}
     </Wrapper>
   );

@@ -68,7 +68,7 @@ export async function getDapps(
     await Promise.all(
       records.map(async (record) => {
         try {
-          return getDapp(record.location);
+          return await getDapp(record.location);
         } catch (error) {
           console.warn(error);
 
