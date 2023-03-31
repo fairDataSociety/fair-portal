@@ -15,11 +15,11 @@ export const LogoLink = styled(NavLink)(({ theme }) => ({
 const Logo = () => {
   return (
     <LogoLink to={RouteCodes.home}>
-      <Typography variant="h4" fontWeight="bold">
+      <Typography variant='h5' fontWeight='normal'>
         Fair Portal
       </Typography>
     </LogoLink>
-  );
+  )
 };
 
 export default Logo;
