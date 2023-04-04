@@ -9,6 +9,7 @@ import {
   ListItemIcon,
   ListItemText,
   ListSubheader,
+  Theme,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -64,11 +65,13 @@ const getCategoryIcon = (category: string): React.ReactElement => {
 };
 
 const Filter = ({
+  theme,
   name,
   selected,
   icon,
   onSelect,
 }: {
+  theme: Theme;
   name: string;
   selected: boolean;
   icon: React.ReactElement;
@@ -79,8 +82,8 @@ const Filter = ({
     <ListItemText
       primary={
         <Typography
-          variant="body2"
-          style={{ fontWeight: selected ? "bold" : "normal" }}
+          variant="body1"
+          style={{ color: selected ? theme.palette.link.main : "inherit" }}
         >
           {name}
         </Typography>
@@ -90,10 +93,12 @@ const Filter = ({
 );
 
 const SubFilter = ({
+  theme,
   subcategories,
   selected,
   onSelect,
 }: {
+  theme: Theme;
   subcategories: string[];
   selected: string[];
   onSelect: (subcategory: string) => void;
@@ -105,15 +110,17 @@ const SubFilter = ({
         sx={{ pl: 4 }}
         onClick={() => onSelect(subcategory)}
       >
-        <ListItemText
-          primary={subcategory}
-          primaryTypographyProps={{
-            sx: {
-              fontSize: "14px",
-              fontWeight: selected.includes(subcategory) ? "bold" : "normal",
-            },
+        <Typography
+          variant="body1"
+          color="silver"
+          sx={{
+            color: selected.includes(subcategory)
+              ? theme.palette.link.main
+              : theme.palette.primary.contrastText,
           }}
-        />
+        >
+          {subcategory}
+        </Typography>
       </ListItemButton>
     ))}
   </List>
@@ -127,6 +134,8 @@ const FilterList = ({
   onSubcategorySelect,
   onValidatedOnlyChange,
 }: FiltersProps) => {
+  const theme = useTheme();
+
   return (
     <List
       sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
@@ -139,6 +148,7 @@ const FilterList = ({
       }
     >
       <Filter
+        theme={theme}
         name="All"
         selected={!selected}
         icon={<ClearAll />}
@@ -147,6 +157,7 @@ const FilterList = ({
       {categories.map((category) => (
         <Fragment key={category.name}>
           <Filter
+            theme={theme}
             name={category.name}
             selected={category.name === selected?.name}
             icon={getCategoryIcon(category.name)}
@@ -154,6 +165,7 @@ const FilterList = ({
           />
           {category.name === selected?.name && (
             <SubFilter
+              theme={theme}
               subcategories={category.subcategories}
               selected={selected.subcategories}
               onSelect={onSubcategorySelect}

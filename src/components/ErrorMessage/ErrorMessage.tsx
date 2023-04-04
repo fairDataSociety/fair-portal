@@ -14,6 +14,7 @@ const ErrorMessage = ({ children }: ErrorMessageProps) => {
       sx={{
         color: (theme) => theme.palette.error.main,
         marginTop: "20px",
+        wordBreak: "break-all",
       }}
     >
       {children}

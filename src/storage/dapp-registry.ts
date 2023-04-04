@@ -2,8 +2,9 @@ import {
   DappRegistry,
   getDappRegistryEnvironmentConfig,
   Environments,
+  RecordHash,
 } from "@fairdatasociety/fdp-contracts-js";
-import { Bee } from "@ethersphere/bee-js";
+import { Bee, Reference } from "@ethersphere/bee-js";
 import { BeeSon } from "@fairdatasociety/beeson";
 import { utils, BigNumber } from "ethers";
 import { Dapp, DappSchema, LocalDapp } from "../model/Dapp";
@@ -24,7 +25,7 @@ export function hashDappUrl(url: string): string {
   return utils.keccak256(toUtf8Bytes(url));
 }
 
-export async function registerDapp(url: string, record: Dapp): Promise<void> {
+async function uploadRecord(record: Dapp): Promise<Reference> {
   const beesonRecord = new BeeSon({ json: record });
 
   const { reference } = await bee.uploadData(
@@ -33,10 +34,28 @@ export async function registerDapp(url: string, record: Dapp): Promise<void> {
     { encrypt: false }
   );
 
+  return reference;
+}
+
+export async function registerDapp(url: string, record: Dapp): Promise<void> {
+  const reference = await uploadRecord(record);
+
   await dappRegistry.createRecord(`0x${reference}`, hashDappUrl(url));
 }
 
-export async function getDapp(swarmLocation: string): Promise<LocalDapp> {
+export async function editDapp(
+  recordHash: RecordHash,
+  record: Dapp
+): Promise<void> {
+  const reference = await uploadRecord(record);
+
+  await dappRegistry.editRecord(recordHash, `0x${reference}`);
+}
+
+export async function downloadDapp(
+  recordHash: RecordHash,
+  swarmLocation: string
+): Promise<LocalDapp> {
   const data = await bee.downloadData(swarmLocation.substring(2));
 
   const deserializedBeeson = (await BeeSon.deserialize(data)) as BeeSon<Dapp>;
@@ -48,9 +67,15 @@ export async function getDapp(swarmLocation: string): Promise<LocalDapp> {
 
   const dapp = deserializedBeeson.json as LocalDapp;
 
-  dapp.hash = swarmLocation;
+  dapp.hash = recordHash;
 
   return dapp;
+}
+
+export async function getDapp(recordHash: RecordHash): Promise<LocalDapp> {
+  const record = await dappRegistry.getRecord(recordHash);
+
+  return downloadDapp(record.recordHash, record.location);
 }
 
 export async function getDapps(
@@ -68,7 +93,7 @@ export async function getDapps(
     await Promise.all(
       records.map(async (record) => {
         try {
-          return await getDapp(record.location);
+          return await downloadDapp(record.recordHash, record.location);
         } catch (error) {
           console.warn(error);
 
@@ -87,7 +112,9 @@ export async function getValidatedRecords(): Promise<
   );
 
   return records.reduce((map, dapp) => {
-    map[dapp.location] = dapp;
+    if (!dapp.edited) {
+      map[dapp.recordHash] = dapp;
+    }
     return map;
   }, {} as Record<string, DappRecord>);
 }

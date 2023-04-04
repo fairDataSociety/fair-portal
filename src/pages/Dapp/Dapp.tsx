@@ -125,9 +125,11 @@ const Dapp = () => {
               }}
               label={dapp.category}
             />
-            <StyledLink href="dapp.url" target="_blank">
-              {dapp.url}
-            </StyledLink>
+            <Typography variant="body1">
+              <StyledLink href="dapp.url" target="_blank">
+                {dapp.url}
+              </StyledLink>
+            </Typography>
             <Typography
               variant="body1"
               fontStyle="italic"

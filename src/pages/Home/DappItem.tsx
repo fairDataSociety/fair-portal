@@ -82,6 +82,7 @@ const DappItem = ({
       </StyledLink>
       <CardContent>
         <Typography
+          variant="body1"
           sx={{
             overflow: "hidden",
             "-webkit-line-clamp": "3",

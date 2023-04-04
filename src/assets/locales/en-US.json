@@ -34,6 +34,5 @@
   "SHOW_VALIDATED_ONLY": "Show Validated Only",
   "VALIDATE": "Validate",
   "UNVALIDATE": "Unvalidate",
-  "EDIT": "Edit",
-  "EDITING_NOTE": "Note: Editing a dApp requires two transactions. One for deleting the old record and second for creating a new one."
+  "EDIT": "Edit"
 }

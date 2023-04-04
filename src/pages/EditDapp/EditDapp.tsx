@@ -4,13 +4,9 @@ import intl from "react-intl-universal";
 import DappForm, { DappFormFields } from "../../components/DappForm/DappForm";
 import { LocalDapp } from "../../model/Dapp";
 import { LinearProgress, Typography } from "@mui/material";
-import dappRegistry, {
-  getDapp,
-  registerDapp,
-} from "../../storage/dapp-registry";
+import { editDapp, getDapp } from "../../storage/dapp-registry";
 import { useParams } from "react-router-dom";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
-import { SwarmLocation } from "@fairdatasociety/fdp-contracts-js";
 
 export const Wrapper = styled("div")(({ theme }) => ({
   display: "flex",
@@ -48,9 +44,7 @@ const EditDapp = () => {
     try {
       setLoading(true);
 
-      await dappRegistry.deleteRecord(hash as SwarmLocation);
-
-      await registerDapp(dapp.url, dapp);
+      await editDapp(hash as string, dapp);
 
       setDone(true);
     } catch (error) {
@@ -74,17 +68,12 @@ const EditDapp = () => {
       ) : (
         <FormWrapper>
           {dapp ? (
-            <>
-              <Typography variant="caption" sx={{ marginBottom: "20px" }}>
-                {intl.get("EDITING_NOTE")}
-              </Typography>
-              <DappForm
-                dapp={dapp}
-                loading={loading}
-                error={error}
-                onSubmit={onRegister}
-              />
-            </>
+            <DappForm
+              dapp={dapp}
+              loading={loading}
+              error={error}
+              onSubmit={onRegister}
+            />
           ) : error ? (
             <ErrorMessage>{error}</ErrorMessage>
           ) : (
