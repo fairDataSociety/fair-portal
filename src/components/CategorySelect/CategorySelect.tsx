@@ -11,15 +11,34 @@ import {
 import { Category } from "../../model/Category";
 import categories from "../../assets/data/categories.json";
 
-export interface CategorySelectProps {}
+export interface CategorySelectProps {
+  defaultSubcategory: string;
+}
 
 const fieldStyles = {
   marginBottom: "20px",
 };
 
-const CategorySelect = ({ disabled, error, ...props }: SelectProps) => {
-  const [category, setCategory] = useState<Category | undefined>(undefined);
-  const [subcategories, setSubcategories] = useState<string[]>([]);
+const findCategoryBySubcategory = (
+  subcategory: string
+): Category | undefined => {
+  return categories.find(({ subcategories }) =>
+    subcategories.some((sc) => sc === subcategory)
+  );
+};
+
+const CategorySelect = ({
+  disabled,
+  error,
+  defaultSubcategory,
+  ...props
+}: SelectProps & CategorySelectProps) => {
+  const [category, setCategory] = useState<Category | undefined>(
+    findCategoryBySubcategory(defaultSubcategory)
+  );
+  const [subcategories, setSubcategories] = useState<string[]>(
+    category?.subcategories || []
+  );
 
   const onCategoryChange = (event: SelectChangeEvent) => {
     const name = event.target.value;
@@ -57,6 +76,7 @@ const CategorySelect = ({ disabled, error, ...props }: SelectProps) => {
         <InputLabel>{intl.get("SUBCATEGORY")}</InputLabel>
         <Select
           {...props}
+          defaultValue={defaultSubcategory}
           error={error}
           autoWidth
           label={intl.get("SUBCATEGORY")}

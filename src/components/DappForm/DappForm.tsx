@@ -48,14 +48,16 @@ const fieldStyles = {
   marginBottom: "20px",
 };
 
-const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
+const DappForm = ({ dapp, loading, error, onSubmit }: DappFormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
     clearErrors,
-  } = useForm<DappFormFields>();
+  } = useForm<DappFormFields>({
+    defaultValues: dapp,
+  });
   const theme = useTheme();
 
   const getFieldError = (
@@ -81,8 +83,56 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
     return `${intl.get(label)} (${intl.get("OPTIONAL")})`;
   };
 
+  const constructLink = (link: string): string => {
+    if (!link) {
+      return "";
+    }
+
+    if (!link.startsWith("http")) {
+      return `http://${link}`;
+    }
+
+    return link;
+  };
+
+  const onSubmitInternal = ({
+    name,
+    authorName,
+    authorAddress,
+    ens,
+    url,
+    category,
+    logo,
+    shortDescription,
+    longDescription,
+    github,
+    website,
+    telegram,
+    reddit,
+    twitter,
+    discord,
+  }: DappFormFields) => {
+    onSubmit({
+      name,
+      authorName,
+      authorAddress,
+      ens,
+      url,
+      category,
+      logo,
+      shortDescription,
+      longDescription,
+      github: constructLink(github),
+      reddit: constructLink(reddit),
+      telegram: constructLink(telegram),
+      twitter: constructLink(twitter),
+      website: constructLink(website),
+      discord: constructLink(discord),
+    });
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmitInternal)}>
       <TextField
         label={intl.get("DAPP_NAME")}
         variant="outlined"
@@ -160,11 +210,13 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
       />
       <CategorySelect
         {...register("category", { required: true })}
+        defaultSubcategory={dapp.category}
         disabled={loading}
         onChange={(event) => {
           setValue("category", event.target.value as string);
           clearErrors("category");
         }}
+        defaultValue={dapp.category}
         error={Boolean(errors.category)}
         data-testid="category"
         ref={null}
@@ -184,6 +236,7 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
         label={intl.get("LONG_DESCRIPTION")}
         variant="outlined"
         multiline
+        rows={3}
         sx={fieldStyles}
         fullWidth
         {...register("longDescription", { required: true, minLength: 50 })}
@@ -218,6 +271,7 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
         formControlProps={{
           fullWidth: true,
         }}
+        defaultValue={dapp.github}
         sx={fieldStyles}
         {...register("github")}
         onChange={(event) => {
@@ -235,6 +289,7 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
         formControlProps={{
           fullWidth: true,
         }}
+        defaultValue={dapp.telegram}
         sx={fieldStyles}
         icon={<Telegram style={{ fill: theme.palette.primary.contrastText }} />}
         {...register("telegram")}
@@ -253,6 +308,7 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
         formControlProps={{
           fullWidth: true,
         }}
+        defaultValue={dapp.discord}
         sx={fieldStyles}
         icon={
           <DiscordLogo style={{ fill: theme.palette.primary.contrastText }} />
@@ -273,6 +329,7 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
         formControlProps={{
           fullWidth: true,
         }}
+        defaultValue={dapp.reddit}
         sx={fieldStyles}
         icon={<Reddit style={{ fill: theme.palette.primary.contrastText }} />}
         {...register("reddit")}
@@ -291,6 +348,7 @@ const DappForm = ({ loading, error, onSubmit }: DappFormProps) => {
         formControlProps={{
           fullWidth: true,
         }}
+        defaultValue={dapp.twitter}
         sx={fieldStyles}
         icon={<Twitter style={{ fill: theme.palette.primary.contrastText }} />}
         {...register("twitter")}

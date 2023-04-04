@@ -38,31 +38,11 @@ const RegisterDapp = () => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [done, setDone] = useState<boolean>(false);
 
-  const constructLink = (link: string): string => {
-    if (!link) {
-      return "";
-    }
-
-    if (!link.startsWith("http")) {
-      return `http://${link}`;
-    }
-
-    return link;
-  };
-
   const onRegister = async (dapp: DappFormFields): Promise<void> => {
     try {
       setLoading(true);
 
-      await registerDapp(dapp.url, {
-        ...dapp,
-        github: constructLink(dapp.github),
-        reddit: constructLink(dapp.reddit),
-        telegram: constructLink(dapp.telegram),
-        twitter: constructLink(dapp.twitter),
-        website: constructLink(dapp.website),
-        discord: constructLink(dapp.discord),
-      });
+      await registerDapp(dapp.url, dapp);
 
       setDone(true);
     } catch (error) {
