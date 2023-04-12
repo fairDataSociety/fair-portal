@@ -43,6 +43,7 @@ const EditDapp = () => {
   const onRegister = async (dapp: DappFormFields): Promise<void> => {
     try {
       setLoading(true);
+      setError(undefined);
 
       await editDapp(hash as string, dapp);
 

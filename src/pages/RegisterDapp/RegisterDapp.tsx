@@ -41,6 +41,7 @@ const RegisterDapp = () => {
   const onRegister = async (dapp: DappFormFields): Promise<void> => {
     try {
       setLoading(true);
+      setError(undefined);
 
       await registerDapp(dapp.url, dapp);
 
