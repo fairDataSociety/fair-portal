@@ -49,6 +49,7 @@ const DappItem = ({
     hash,
     website,
     github,
+    discord,
     reddit,
     twitter,
     telegram,
@@ -97,6 +98,7 @@ const DappItem = ({
           <DappLinks
             website={website}
             github={github}
+            discord={discord}
             reddit={reddit}
             twitter={twitter}
             telegram={telegram}

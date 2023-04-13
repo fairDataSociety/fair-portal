@@ -176,6 +176,7 @@ const Dapp = () => {
               <DappLinks
                 website={dapp.website}
                 github={dapp.github}
+                discord={dapp.discord}
                 reddit={dapp.reddit}
                 twitter={dapp.twitter}
                 telegram={dapp.telegram}
