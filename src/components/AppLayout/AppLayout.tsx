@@ -4,7 +4,6 @@ import AppHeader from "../AppHeader/AppHeader";
 import Footer from "../Footer/Footer";
 import { Container } from "@mui/material";
 import Filters from "../Filters/Filters";
-import { useWalletContext } from "../../context/WalletContext";
 import { useDappContext } from "../../context/DappContext";
 
 export interface AppLayoutProps {
@@ -18,7 +17,6 @@ export const Wrapper = styled("div")({
 });
 
 const AppLayout = ({ children }: AppLayoutProps) => {
-  const { connected, isValidator } = useWalletContext();
   const {
     categories,
     filter,
@@ -43,7 +41,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           validatedOnly={filter.validatedOnly}
           onCategorySelect={onCategorySelect}
           onSubcategorySelect={onSubcategorySelect}
-          onValidatedOnlyChange={connected ? onValidatedChange : undefined}
+          onValidatedOnlyChange={onValidatedChange}
         />
         {children}
       </Container>
