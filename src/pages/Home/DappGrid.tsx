@@ -11,6 +11,7 @@ export const DappList = styled("div")(({ theme }) => ({
   display: "grid",
   width: "100%",
   gridTemplateColumns: "repeat(auto-fill, 100%)",
+  gridTemplateRows: "repeat(auto-fill, 220px)",
   justifyContent: "center",
   gridGap: "40px",
   [theme.breakpoints.up("sm")]: {
