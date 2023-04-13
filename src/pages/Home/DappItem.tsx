@@ -64,7 +64,7 @@ const DappItem = ({
         flexDirection: "column",
         padding: "10px",
         height: "220px",
-        backgroundColor: validated ? "#8888881c" : "#87004d",
+        backgroundColor: validated ? "#8888881c" : "#87004d85",
       }}
     >
       <StyledLink to={RouteCodes.dapp.replace(":hash", hash as string)}>

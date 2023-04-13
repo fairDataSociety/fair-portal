@@ -43,9 +43,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           validatedOnly={filter.validatedOnly}
           onCategorySelect={onCategorySelect}
           onSubcategorySelect={onSubcategorySelect}
-          onValidatedOnlyChange={
-            connected && isValidator ? onValidatedChange : undefined
-          }
+          onValidatedOnlyChange={connected ? onValidatedChange : undefined}
         />
         {children}
       </Container>

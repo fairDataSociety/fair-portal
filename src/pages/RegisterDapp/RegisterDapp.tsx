@@ -5,6 +5,7 @@ import DappForm, { DappFormFields } from "../../components/DappForm/DappForm";
 import { Dapp } from "../../model/Dapp";
 import { Typography } from "@mui/material";
 import { registerDapp } from "../../storage/dapp-registry";
+import { useDappContext } from "../../context/DappContext";
 
 export const Wrapper = styled("div")(({ theme }) => ({
   display: "flex",
@@ -34,6 +35,7 @@ const initialDapp: Dapp = {
 };
 
 const RegisterDapp = () => {
+  const { reload } = useDappContext();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const [done, setDone] = useState<boolean>(false);
@@ -41,8 +43,11 @@ const RegisterDapp = () => {
   const onRegister = async (dapp: DappFormFields): Promise<void> => {
     try {
       setLoading(true);
+      setError(undefined);
 
       await registerDapp(dapp.url, dapp);
+
+      reload();
 
       setDone(true);
     } catch (error) {

@@ -20,6 +20,7 @@ export interface Dapp {
 export interface LocalDapp extends Dapp {
   hash: string;
   validated: boolean;
+  edited: boolean;
 }
 
 export const DappSchema: Dapp = {

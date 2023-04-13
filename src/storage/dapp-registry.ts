@@ -54,7 +54,8 @@ export async function editDapp(
 
 export async function downloadDapp(
   recordHash: RecordHash,
-  swarmLocation: string
+  swarmLocation: string,
+  edited: boolean
 ): Promise<LocalDapp> {
   const data = await bee.downloadData(swarmLocation.substring(2));
 
@@ -68,6 +69,7 @@ export async function downloadDapp(
   const dapp = deserializedBeeson.json as LocalDapp;
 
   dapp.hash = recordHash;
+  dapp.edited = edited;
 
   return dapp;
 }
@@ -75,7 +77,7 @@ export async function downloadDapp(
 export async function getDapp(recordHash: RecordHash): Promise<LocalDapp> {
   const record = await dappRegistry.getRecord(recordHash);
 
-  return downloadDapp(record.recordHash, record.location);
+  return downloadDapp(record.recordHash, record.location, record.edited);
 }
 
 export async function getDapps(
@@ -93,7 +95,11 @@ export async function getDapps(
     await Promise.all(
       records.map(async (record) => {
         try {
-          return await downloadDapp(record.recordHash, record.location);
+          return await downloadDapp(
+            record.recordHash,
+            record.location,
+            record.edited
+          );
         } catch (error) {
           console.warn(error);
 
@@ -104,17 +110,14 @@ export async function getDapps(
   ).filter((dapp) => Boolean(dapp)) as LocalDapp[];
 }
 
-export async function getValidatedRecords(): Promise<
-  Record<string, DappRecord>
-> {
-  const records = await dappRegistry.getValidatedRecords(
-    import.meta.env.VITE_FDP_ADDRESS as string
-  );
+export async function getValidatedRecords(
+  address: string
+): Promise<Record<string, DappRecord>> {
+  const records = await dappRegistry.getValidatedRecords(address);
 
   return records.reduce((map, dapp) => {
-    if (!dapp.edited) {
-      map[dapp.recordHash] = dapp;
-    }
+    map[dapp.recordHash] = dapp;
+
     return map;
   }, {} as Record<string, DappRecord>);
 }

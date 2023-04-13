@@ -3,6 +3,7 @@ import intl from "react-intl-universal";
 import { styled } from "@mui/system";
 import { LocalDapp } from "../../model/Dapp";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
+import VerifiedUser from "@mui/icons-material/VerifiedUser";
 import dappRegistry, { getDapp } from "../../storage/dapp-registry";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import {
@@ -52,28 +53,36 @@ const Dapp = () => {
   const { hash } = useParams();
   const navigate = useNavigate();
   const theme = useTheme();
-  const { connected, isAdmin, isValidator, address } = useWalletContext();
-  const { validatedRecords, reload } = useDappContext();
+  const { connected, isAdmin, address } = useWalletContext();
+  const { validatedRecords, userValidatedRecords, isDappValidated, reload } =
+    useDappContext();
   const [dapp, setDapp] = useState<LocalDapp | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
+  const userValidated =
+    address === import.meta.env.VITE_FDP_ADDRESS
+      ? dapp?.validated
+      : Boolean(userValidatedRecords[hash as string]);
 
   const loadDapp = async () => {
     try {
       const dapp = await getDapp(hash as string);
-      dapp.validated = Boolean(validatedRecords[hash as string]);
-
+      dapp.validated = isDappValidated(
+        dapp,
+        validatedRecords,
+        userValidatedRecords
+      );
       setDapp(dapp);
     } catch (error) {
       setError(String(error));
     }
   };
 
-  const onValidateChange = async () => {
+  const onValidateChange = async (): Promise<void> => {
     try {
       setLoading(true);
 
-      await (dapp?.validated
+      await (userValidated
         ? dappRegistry.unvalidateRecord(dapp?.hash as string)
         : dappRegistry.validateRecord(dapp?.hash as string));
 
@@ -91,10 +100,14 @@ const Dapp = () => {
     if (dapp) {
       setDapp({
         ...dapp,
-        validated: Boolean(validatedRecords[hash as string]),
+        validated: isDappValidated(
+          dapp,
+          validatedRecords,
+          userValidatedRecords
+        ),
       });
     }
-  }, [validatedRecords]);
+  }, [validatedRecords, userValidatedRecords]);
 
   useEffect(() => {
     loadDapp();
@@ -110,7 +123,17 @@ const Dapp = () => {
           />
           <Content>
             {error && <ErrorMessage>{error}</ErrorMessage>}
-            <Typography variant="h3">{dapp.name}</Typography>
+            <Typography variant="h3">
+              {dapp.name}
+              {dapp.validated && validatedRecords[dapp.hash] && (
+                <Tooltip
+                  title={intl.get("VALIDATED_BY_FDS")}
+                  placement="bottom-start"
+                >
+                  <VerifiedUser sx={{ ml: "5px" }} />
+                </Tooltip>
+              )}
+            </Typography>
             <Tooltip title={dapp.authorAddress} placement="bottom-start">
               <Typography variant="h6" color="silver">
                 {dapp.authorName}
@@ -126,7 +149,7 @@ const Dapp = () => {
               label={dapp.category}
             />
             <Typography variant="body1">
-              <StyledLink href="dapp.url" target="_blank">
+              <StyledLink href={dapp.url} target="_blank">
                 {dapp.url}
               </StyledLink>
             </Typography>
@@ -158,17 +181,18 @@ const Dapp = () => {
                 telegram={dapp.telegram}
               />
             </div>
-            {connected && isValidator && (
+            {connected && (
               <Button
                 onClick={onValidateChange}
                 variant="contained"
-                color={dapp.validated ? "success" : "error"}
+                disabled={loading}
+                color={userValidated ? "success" : "error"}
                 sx={{ fontWeight: "bold", marginTop: "20px" }}
               >
                 {loading ? (
                   <CircularProgress />
                 ) : (
-                  intl.get(dapp.validated ? "UNVALIDATE" : "VALIDATE")
+                  intl.get(userValidated ? "UNVALIDATE" : "VALIDATE")
                 )}
               </Button>
             )}

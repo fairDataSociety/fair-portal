@@ -34,5 +34,6 @@
   "SHOW_VALIDATED_ONLY": "Show Validated Only",
   "VALIDATE": "Validate",
   "UNVALIDATE": "Unvalidate",
-  "EDIT": "Edit"
+  "EDIT": "Edit",
+  "VALIDATED_BY_FDS": "Validated by FDS"
 }

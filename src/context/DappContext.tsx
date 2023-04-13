@@ -7,6 +7,7 @@ import { Category } from "../model/Category";
 import { DappRecord } from "@fairdatasociety/fdp-contracts-js/build/types/model/dapp-record.model";
 import { useNavigate } from "react-router-dom";
 import RouteCodes from "../routes/RouteCodes";
+import { useWalletContext } from "./WalletContext";
 
 export interface DappFilters {
   search: string;
@@ -17,6 +18,7 @@ export interface DappFilters {
 export interface DappContext {
   allDapps: LocalDapp[];
   validatedRecords: Record<string, DappRecord>;
+  userValidatedRecords: Record<string, DappRecord>;
   filteredDapps: LocalDapp[];
   categories: Category[];
   loading: boolean;
@@ -26,11 +28,17 @@ export interface DappContext {
   onSubcategorySelect: (subcateogory: string) => void;
   onSearch: (search: string) => void;
   onValidatedChange: (validatedOnly: boolean) => void;
+  isDappValidated: (
+    dapp: LocalDapp,
+    validatedRecords: Record<string, DappRecord>,
+    userValidatedRecords: Record<string, DappRecord>
+  ) => boolean;
 }
 
 const DappContext = createContext<DappContext>({
   allDapps: [],
   validatedRecords: {},
+  userValidatedRecords: {},
   filteredDapps: [],
   categories,
   loading: true,
@@ -44,6 +52,7 @@ const DappContext = createContext<DappContext>({
   onSubcategorySelect: (subcateogory: string) => {},
   onSearch: (search: string) => {},
   onValidatedChange: (validatedOnly: boolean) => {},
+  isDappValidated: () => false,
 });
 
 export const useDappContext = () => useContext(DappContext);
@@ -64,24 +73,75 @@ export const DappContextProvider = ({ children }: DappContextProviderProps) => {
     category: null,
     validatedOnly: true,
   });
+  const { address } = useWalletContext();
+  const [userValidatedRecords, setUserValidatedRecords] = useState<
+    Record<string, DappRecord>
+  >({});
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const isDappValidated = (
+    dapp: LocalDapp,
+    validatedRecords: Record<string, DappRecord>,
+    userValidatedRecords: Record<string, DappRecord>
+  ): boolean => {
+    return Boolean(
+      (validatedRecords[dapp.hash] && !dapp.edited) ||
+        userValidatedRecords[dapp.hash]
+    );
+  };
 
   const loadDapps = async () => {
     try {
       setLoading(true);
       // TODO Add pagination
-      const [dapps, validatedRecords] = await Promise.all([
-        getDapps(0, 100),
-        getValidatedRecords(),
-      ]);
+      const [dapps, validatedRecords, userValidatedRecords] = await Promise.all(
+        [
+          getDapps(0, 100),
+          getValidatedRecords(import.meta.env.VITE_FDP_ADDRESS),
+          address && address !== import.meta.env.VITE_FDP_ADDRESS
+            ? getValidatedRecords(address as string)
+            : Promise.resolve({}),
+        ]
+      );
+
       dapps.forEach(
         (dapp) =>
-          (dapp.validated = Boolean(validatedRecords[dapp.hash as string]))
+          (dapp.validated = isDappValidated(
+            dapp,
+            validatedRecords,
+            userValidatedRecords
+          ))
       );
 
       setAllDapps(dapps);
       setValidatedRecords(validatedRecords);
+      setUserValidatedRecords(userValidatedRecords);
+    } catch (error) {
+      console.error(error);
+      setError(String(error));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadUserValidatedRecords = async () => {
+    try {
+      setLoading(true);
+      const userValidatedRecords = await getValidatedRecords(address as string);
+
+      setAllDapps(
+        allDapps.map((dapp) => ({
+          ...dapp,
+          validated: isDappValidated(
+            dapp,
+            validatedRecords,
+            userValidatedRecords
+          ),
+        }))
+      );
+
+      setUserValidatedRecords(userValidatedRecords);
     } catch (error) {
       console.error(error);
       setError(String(error));
@@ -150,6 +210,12 @@ export const DappContextProvider = ({ children }: DappContextProviderProps) => {
   }, [filter, allDapps]);
 
   useEffect(() => {
+    if (address) {
+      loadUserValidatedRecords();
+    }
+  }, [address]);
+
+  useEffect(() => {
     loadDapps();
   }, []);
 
@@ -158,6 +224,7 @@ export const DappContextProvider = ({ children }: DappContextProviderProps) => {
       value={{
         allDapps,
         validatedRecords,
+        userValidatedRecords,
         filteredDapps,
         categories,
         filter,
@@ -167,6 +234,7 @@ export const DappContextProvider = ({ children }: DappContextProviderProps) => {
         onSubcategorySelect,
         onSearch,
         onValidatedChange,
+        isDappValidated,
       }}
     >
       {children}
