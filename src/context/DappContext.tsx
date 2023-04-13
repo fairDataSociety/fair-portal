@@ -95,10 +95,16 @@ export const DappContextProvider = ({ children }: DappContextProviderProps) => {
     try {
       setLoading(true);
       // TODO Add pagination
-      const [dapps, validatedRecords] = await Promise.all([
-        getDapps(0, 100),
-        getValidatedRecords(import.meta.env.VITE_FDP_ADDRESS),
-      ]);
+      const [dapps, validatedRecords, userValidatedRecords] = await Promise.all(
+        [
+          getDapps(0, 100),
+          getValidatedRecords(import.meta.env.VITE_FDP_ADDRESS),
+          address && address !== import.meta.env.VITE_FDP_ADDRESS
+            ? getValidatedRecords(address as string)
+            : Promise.resolve({}),
+        ]
+      );
+
       dapps.forEach(
         (dapp) =>
           (dapp.validated = isDappValidated(
@@ -110,6 +116,7 @@ export const DappContextProvider = ({ children }: DappContextProviderProps) => {
 
       setAllDapps(dapps);
       setValidatedRecords(validatedRecords);
+      setUserValidatedRecords(userValidatedRecords);
     } catch (error) {
       console.error(error);
       setError(String(error));

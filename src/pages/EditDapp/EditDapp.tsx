@@ -7,6 +7,7 @@ import { LinearProgress, Typography } from "@mui/material";
 import { editDapp, getDapp } from "../../storage/dapp-registry";
 import { useParams } from "react-router-dom";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
+import { useDappContext } from "../../context/DappContext";
 
 export const Wrapper = styled("div")(({ theme }) => ({
   display: "flex",
@@ -25,6 +26,7 @@ export const FormWrapper = styled("div")({
 
 const EditDapp = () => {
   const { hash } = useParams();
+  const { reload } = useDappContext();
   const [dapp, setDapp] = useState<LocalDapp | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
@@ -46,6 +48,8 @@ const EditDapp = () => {
       setError(undefined);
 
       await editDapp(hash as string, dapp);
+
+      reload();
 
       setDone(true);
     } catch (error) {

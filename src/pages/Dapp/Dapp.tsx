@@ -59,6 +59,10 @@ const Dapp = () => {
   const [dapp, setDapp] = useState<LocalDapp | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
+  const userValidated =
+    address === import.meta.env.VITE_FDP_ADDRESS
+      ? dapp?.validated
+      : Boolean(userValidatedRecords[hash as string]);
 
   const loadDapp = async () => {
     try {
@@ -78,7 +82,7 @@ const Dapp = () => {
     try {
       setLoading(true);
 
-      await (dapp?.validated
+      await (userValidated
         ? dappRegistry.unvalidateRecord(dapp?.hash as string)
         : dappRegistry.validateRecord(dapp?.hash as string));
 
@@ -181,13 +185,14 @@ const Dapp = () => {
               <Button
                 onClick={onValidateChange}
                 variant="contained"
-                color={dapp.validated ? "success" : "error"}
+                disabled={loading}
+                color={userValidated ? "success" : "error"}
                 sx={{ fontWeight: "bold", marginTop: "20px" }}
               >
                 {loading ? (
                   <CircularProgress />
                 ) : (
-                  intl.get(dapp.validated ? "UNVALIDATE" : "VALIDATE")
+                  intl.get(userValidated ? "UNVALIDATE" : "VALIDATE")
                 )}
               </Button>
             )}
