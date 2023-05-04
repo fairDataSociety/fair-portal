@@ -5,6 +5,7 @@ import Footer from "../Footer/Footer";
 import { Container } from "@mui/material";
 import Filters from "../Filters/Filters";
 import { useDappContext } from "../../context/DappContext";
+import Disclaimer from "../Disclaimer/Disclaimer";
 
 export interface AppLayoutProps {
   children: React.ReactNode;
@@ -27,6 +28,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
 
   return (
     <Wrapper>
+      <Disclaimer />
       <AppHeader />
       <Container
         sx={{
