@@ -19,8 +19,11 @@ export interface Dapp {
 
 export interface LocalDapp extends Dapp {
   hash: string;
+  location: string;
   validated: boolean;
   edited: boolean;
+  averageRating?: number;
+  numberOfRatings?: number;
 }
 
 export const DappSchema: Dapp = {

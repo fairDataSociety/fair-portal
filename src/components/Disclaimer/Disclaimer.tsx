@@ -13,6 +13,7 @@ const Disclaimer = () => {
   return (
     <Container
       sx={{
+        maxWidth: "100% !important",
         textAlign: "center",
         backgroundColor: theme.palette.secondary.main,
       }}

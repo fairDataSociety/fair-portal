@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import intl from "react-intl-universal";
+import { utils } from "ethers";
 import { styled } from "@mui/system";
 import { LocalDapp } from "../../model/Dapp";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
@@ -10,7 +11,9 @@ import {
   Button,
   Chip,
   CircularProgress,
+  Container,
   LinearProgress,
+  Rating,
   Tooltip,
   Typography,
   useTheme,
@@ -19,6 +22,7 @@ import DappLinks from "../../components/DappLinks/DappLinks";
 import { useWalletContext } from "../../context/WalletContext";
 import { useDappContext } from "../../context/DappContext";
 import RouteCodes from "../../routes/RouteCodes";
+import { SwarmLocation } from "@fairdatasociety/fdp-contracts-js";
 
 export const Wrapper = styled("div")(({ theme }) => ({
   maxWidth: "800px",
@@ -52,11 +56,11 @@ export const StyledLink = styled("a")(({ theme }) => ({
 const Dapp = () => {
   const { hash } = useParams();
   const navigate = useNavigate();
-  const theme = useTheme();
   const { connected, isAdmin, address } = useWalletContext();
   const { validatedRecords, userValidatedRecords, isDappValidated, reload } =
     useDappContext();
   const [dapp, setDapp] = useState<LocalDapp | null>(null);
+  const [userRated, setUserRated] = useState<boolean | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const userValidated =
@@ -96,6 +100,64 @@ const Dapp = () => {
     }
   };
 
+  const getUserRated = async () => {
+    try {
+      const userRated = await dappRegistry.hasUserRated(
+        dapp?.location as unknown as SwarmLocation
+      );
+
+      setUserRated(userRated);
+    } catch (error) {
+      setError(String(error));
+      console.error(error);
+    }
+  };
+
+  const onRatingChange = async (rating: number | null) => {
+    const averageRating = dapp?.averageRating as number;
+    const numberOfRatings = dapp?.numberOfRatings as number;
+
+    try {
+      if (!Number.isInteger(rating)) {
+        return;
+      }
+
+      setLoading(true);
+
+      const userRating = rating as number;
+
+      setDapp({
+        ...(dapp as LocalDapp),
+        averageRating: userRating,
+      });
+
+      await dappRegistry.rateDapp(
+        dapp?.location as unknown as SwarmLocation,
+        utils.formatBytes32String(""),
+        rating as number
+      );
+
+      setDapp({
+        ...(dapp as LocalDapp),
+        numberOfRatings: numberOfRatings + 1,
+        averageRating:
+          (averageRating * numberOfRatings + userRating) /
+          (numberOfRatings + 1),
+      });
+      setUserRated(true);
+    } catch (error) {
+      setError(String(error));
+      setDapp({
+        ...(dapp as LocalDapp),
+        averageRating,
+        numberOfRatings,
+      });
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (dapp) {
       setDapp({
@@ -108,6 +170,14 @@ const Dapp = () => {
       });
     }
   }, [validatedRecords, userValidatedRecords]);
+
+  useEffect(() => {
+    if (address && dapp) {
+      getUserRated();
+    } else {
+      setUserRated(null);
+    }
+  }, [address, dapp]);
 
   useEffect(() => {
     loadDapp();
@@ -139,6 +209,29 @@ const Dapp = () => {
                 {dapp.authorName}
               </Typography>
             </Tooltip>
+            <Container
+              sx={{
+                padding: "0 !important",
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Rating
+                value={dapp.averageRating || 0}
+                disabled={loading || userRated !== false}
+                onChange={(event, newValue) => onRatingChange(newValue)}
+              />
+              <Typography variant="body2" sx={{ marginLeft: "10px" }}>
+                ({dapp.numberOfRatings?.toString() || 0})
+              </Typography>
+              {loading && (
+                <CircularProgress
+                  sx={{ position: "absolute", top: "-5px", left: "50px" }}
+                />
+              )}
+            </Container>
+
             <Chip
               sx={{
                 width: "fit-content",
