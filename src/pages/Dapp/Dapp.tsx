@@ -61,7 +61,8 @@ const Dapp = () => {
     useDappContext();
   const [dapp, setDapp] = useState<LocalDapp | null>(null);
   const [userRated, setUserRated] = useState<boolean | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [validationLoading, setValidationLoading] = useState<boolean>(false);
+  const [ratingLoading, setRatingLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const userValidated =
     address === import.meta.env.VITE_FDP_ADDRESS
@@ -84,7 +85,7 @@ const Dapp = () => {
 
   const onValidateChange = async (): Promise<void> => {
     try {
-      setLoading(true);
+      setValidationLoading(true);
 
       await (userValidated
         ? dappRegistry.unvalidateRecord(dapp?.hash as string)
@@ -96,7 +97,7 @@ const Dapp = () => {
     } catch (error) {
       setError(String(error));
     } finally {
-      setLoading(false);
+      setValidationLoading(false);
     }
   };
 
@@ -122,7 +123,7 @@ const Dapp = () => {
         return;
       }
 
-      setLoading(true);
+      setRatingLoading(true);
 
       const userRating = rating as number;
 
@@ -154,7 +155,7 @@ const Dapp = () => {
       });
       console.error(error);
     } finally {
-      setLoading(false);
+      setRatingLoading(false);
     }
   };
 
@@ -219,13 +220,13 @@ const Dapp = () => {
             >
               <Rating
                 value={dapp.averageRating || 0}
-                disabled={loading || userRated !== false}
+                disabled={ratingLoading || userRated !== false}
                 onChange={(event, newValue) => onRatingChange(newValue)}
               />
               <Typography variant="body2" sx={{ marginLeft: "10px" }}>
                 ({dapp.numberOfRatings?.toString() || 0})
               </Typography>
-              {loading && (
+              {ratingLoading && (
                 <CircularProgress
                   sx={{ position: "absolute", top: "-5px", left: "50px" }}
                 />
@@ -279,11 +280,11 @@ const Dapp = () => {
               <Button
                 onClick={onValidateChange}
                 variant="contained"
-                disabled={loading}
+                disabled={validationLoading}
                 color={userValidated ? "success" : "error"}
                 sx={{ fontWeight: "bold", marginTop: "20px" }}
               >
-                {loading ? (
+                {validationLoading ? (
                   <CircularProgress />
                 ) : (
                   intl.get(userValidated ? "UNVALIDATE" : "VALIDATE")
