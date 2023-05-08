@@ -55,7 +55,9 @@ export async function editDapp(
 export async function downloadDapp(
   recordHash: RecordHash,
   swarmLocation: string,
-  edited: boolean
+  edited: boolean,
+  averageRating?: number,
+  numberOfRatings?: number
 ): Promise<LocalDapp> {
   const data = await bee.downloadData(swarmLocation.substring(2));
 
@@ -69,7 +71,10 @@ export async function downloadDapp(
   const dapp = deserializedBeeson.json as LocalDapp;
 
   dapp.hash = recordHash;
+  dapp.location = swarmLocation;
   dapp.edited = edited;
+  dapp.averageRating = averageRating;
+  dapp.numberOfRatings = numberOfRatings;
 
   return dapp;
 }
@@ -77,7 +82,18 @@ export async function downloadDapp(
 export async function getDapp(recordHash: RecordHash): Promise<LocalDapp> {
   const record = await dappRegistry.getRecord(recordHash);
 
-  return downloadDapp(record.recordHash, record.location, record.edited);
+  const [averageRating, numberOfRatings] = await Promise.all([
+    dappRegistry.getAverageRating(record.location),
+    dappRegistry.getNumberOfRatings(record.location),
+  ]);
+
+  return downloadDapp(
+    record.recordHash,
+    record.location,
+    record.edited,
+    averageRating,
+    numberOfRatings.toNumber()
+  );
 }
 
 export async function getDapps(
