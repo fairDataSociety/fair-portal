@@ -11,14 +11,17 @@ import { Dapp, DappSchema, LocalDapp } from "../model/Dapp";
 import { toUtf8Bytes } from "ethers/lib/utils";
 import { DappRecord } from "@fairdatasociety/fdp-contracts-js/build/types/model/dapp-record.model";
 
-const dappRegistry = new DappRegistry(
-  getDappRegistryEnvironmentConfig(
-    import.meta.env.VITE_ENVIRONMENT === "LOCALHOST"
-      ? Environments.LOCALHOST
-      : Environments.SEPOLIA
-  )
-);
+const environment = import.meta.env.VITE_ENVIRONMENT;
 
+const dappRegistry = new DappRegistry({
+  ...getDappRegistryEnvironmentConfig(
+    environment === "LOCALHOST" ? Environments.LOCALHOST : Environments.SEPOLIA
+  ),
+  rpcUrl:
+    environment === "LOCALHOST"
+      ? "http://127.0.0.1:9545/"
+      : "https://sepolia.dev.fairdatasociety.org",
+});
 const bee = new Bee(import.meta.env.VITE_BEE_URL);
 
 export function hashDappUrl(url: string): string {
