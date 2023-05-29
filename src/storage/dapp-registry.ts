@@ -13,9 +13,9 @@ import { DappRecord } from "@fairdatasociety/fdp-contracts-js/build/types/model/
 
 const dappRegistry = new DappRegistry(
   getDappRegistryEnvironmentConfig(
-    import.meta.env.VITE_ENVIRONMENT === "GOERLI"
-      ? Environments.GOERLI
-      : Environments.LOCALHOST
+    import.meta.env.VITE_ENVIRONMENT === "LOCALHOST"
+      ? Environments.LOCALHOST
+      : Environments.SEPOLIA
   )
 );
 
