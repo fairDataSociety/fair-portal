@@ -22,7 +22,9 @@ RUN npm run build
 
 #webserver
 FROM nginx:stable-alpine
-COPY --from=build /base/dist /usr/share/nginx/html
+ARG VITE_BASE_URI
+ENV VITE_BASE_URI=$VITE_BASE_URI
+COPY --from=build /base/dist /usr/share/nginx/html/$VITE_BASE_URI
 RUN echo "real_ip_header X-Forwarded-For;" \
     "real_ip_recursive on;" \
     "set_real_ip_from 0.0.0.0/0;" > /etc/nginx/conf.d/ip.conf
