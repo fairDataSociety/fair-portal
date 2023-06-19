@@ -1,0 +1,68 @@
+{
+  "Variables": [
+    {
+      "Name": "DEPLOYMENT",
+      "Value": ".",
+      "Scope": {
+        "Environment": [
+          "main"
+        ]
+      }
+    },
+    {
+      "Name": "DEPLOYMENT",
+      "Value": ".dev.",
+      "Scope": {
+        "Environment": [
+          "development"
+        ]
+      }
+    },
+    {
+      "Name": "VITE_BASE_URI",
+      "Value": "/apps/fportal/",
+      "Scope": {}
+    },
+    {
+      "Name": "VITE_FDP_ADDRESS",
+      "Value": "0xd27ffA0e47Fca8D3E757B4d2C408169859B8c419",
+      "Scope": {}
+    },
+    {
+      "Name": "VITE_BATCH_ID",
+      "Value": "b48953f094938e65f64addef4049b1f41b8140f3673053f2bb0db74b0b15f7be",
+      "Scope": {}
+    },
+    {
+      "Name": "VITE_BEE_URL",
+      "Value": "https://bee-1#{DEPLOYMENT}fairdatasociety.org",
+      "Scope": {}
+    },
+    {
+      "Name": "VITE_ENVIRONMENT",
+      "Value": "SEPOLIA",
+      "Scope": {}
+    },
+    {
+      "Name": "PURGE_URL",
+      "Value": "https://fairdrive#{DEPLOYMENT}fairdatasociety.org",
+      "Scope": {}
+    },
+    {
+      "Name": "SWARM_URL",
+      "Value": "https://gateway#{DEPLOYMENT}fairdatasociety.org/proxy/",
+      "Scope": {}
+    },
+    {
+      "Name": "SIGNER",
+      "Value": "SIGNER_$GITHUB_REF_NAME",
+      "Scope": {
+        "Environment": [
+          "main",
+          "development"
+        ]
+      }
+    }
+  ]
+}
+

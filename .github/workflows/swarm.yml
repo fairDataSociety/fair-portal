@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-      - development
-      - staging
 
 jobs:
   build:
@@ -19,30 +17,14 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: set vars per branch
-        id: vars
-        run: |
-          if [ "$GITHUB_REF_NAME" == 'main' ]; then
-              echo "VITE_ENVIRONMENT=SEPOLIA" >> "$GITHUB_ENV"
-              echo "VITE_BEE_URL=https://bee-1.fairdatasociety.org" >> "$GITHUB_ENV"
-              echo "VITE_BATCH_ID=b48953f094938e65f64addef4049b1f41b8140f3673053f2bb0db74b0b15f7be" >> "$GITHUB_ENV"
-              echo "VITE_FDP_ADDRESS=0xd27ffA0e47Fca8D3E757B4d2C408169859B8c419" >> "$GITHUB_ENV"
-              echo "VITE_BASE_URI=/apps/fportal" >> "$GITHUB_ENV"
-              echo "PURGE_URL=https://fairdrive.fairdatasociety.org" >> "$GITHUB_ENV"
-              echo "SWARM_URL=https://gateway.fairdatasociety.org/proxy/" >> "$GITHUB_ENV"
-              echo "SIGNER=SIGNER_$GITHUB_REF_NAME" >> "$GITHUB_ENV"
-              echo "DEPLOYMENT=." >> "$GITHUB_ENV"
-          elif [ "$GITHUB_REF_NAME" == 'development' ]; then
-              echo "VITE_ENVIRONMENT=SEPOLIA" >> "$GITHUB_ENV"
-              echo "VITE_BEE_URL=https://bee-1.dev.fairdatasociety.org" >> "$GITHUB_ENV"
-              echo "VITE_BATCH_ID=b48953f094938e65f64addef4049b1f41b8140f3673053f2bb0db74b0b15f7be" >> "$GITHUB_ENV"
-              echo "VITE_FDP_ADDRESS=0xd27ffA0e47Fca8D3E757B4d2C408169859B8c419" >> "$GITHUB_ENV"
-              echo "VITE_BASE_URI=/apps/fportal" >> "$GITHUB_ENV"
-              echo "PURGE_URL=https://fairdrive.dev.fairdatasociety.org" >> "$GITHUB_ENV"
-              echo "SWARM_URL=https://gateway.dev.fairdatasociety.org/proxy/" >> "$GITHUB_ENV"
-              echo "SIGNER=SIGNER_$GITHUB_REF_NAME" >> "$GITHUB_ENV"
-              echo "DEPLOYMENT=.dev." >> "$GITHUB_ENV"
-          fi
+
+      - name: Set environment specific variables
+        uses: jnus/json-variables@v1.0
+        with:
+          scope: ${{ github.ref_name }}
+          configFile: '.github/workflows/variables.json'
+          secrets: '${{ toJson(secrets.github_token) }}'
+
       - name: Cache node modules
         id: cache-npm
         uses: actions/cache@v3
