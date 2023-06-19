@@ -62,6 +62,8 @@ jobs:
           timeout: 200000
       - name: update feed
         id: swarm-feed
+        env: 
+          SIGNER: SIGNER_${{ github.ref_name}}
         uses: ethersphere/swarm-actions/write-feed@latest
         with:
           bee-url: ${{ env.SWARM_URL }}
