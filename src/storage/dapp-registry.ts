@@ -141,4 +141,28 @@ export async function getValidatedRecords(
   }, {} as Record<string, DappRecord>);
 }
 
+export async function getUserRecords(address: string): Promise<DappRecord[]> {
+  const recordHashes = await dappRegistry.getUserRecordHashes(address);
+
+  return dappRegistry.getRecords(recordHashes);
+}
+
+export async function filterExpiredRecords(
+  records: DappRecord[]
+): Promise<DappRecord[]> {
+  const expired = await Promise.all(
+    records.map(async ({ recordHash, location, edited }) => {
+      try {
+        await downloadDapp(recordHash, location, edited);
+
+        return false;
+      } catch (error) {
+        return true;
+      }
+    })
+  );
+
+  return records.filter((record, index) => expired[index]);
+}
+
 export default dappRegistry;

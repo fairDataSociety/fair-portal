@@ -27,6 +27,9 @@ import CategoryIcon from "@mui/icons-material/Category";
 import Check from "@mui/icons-material/Check";
 import ClearAll from "@mui/icons-material/ClearAll";
 import { Category } from "../../model/Category";
+import { useWalletContext } from "../../context/WalletContext";
+import { useNavigate } from "react-router-dom";
+import RouteCodes from "../../routes/RouteCodes";
 
 export interface FiltersProps {
   categories: Category[];
@@ -135,6 +138,8 @@ const FilterList = ({
   onValidatedOnlyChange,
 }: FiltersProps) => {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const { connected } = useWalletContext();
 
   return (
     <List
@@ -182,6 +187,11 @@ const FilterList = ({
               validatedOnly ? "SHOW_ALL" : "SHOW_VALIDATED_ONLY"
             )}
           />
+        </ListItemButton>
+      )}
+      {connected && (
+        <ListItemButton onClick={() => navigate(RouteCodes.expiredDapps)}>
+          <ListItemText primary={intl.get("EXPIRED_DAPPS")} />
         </ListItemButton>
       )}
     </List>
