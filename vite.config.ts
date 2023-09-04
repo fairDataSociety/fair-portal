@@ -5,7 +5,10 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   base: "",
   plugins: [react()],
-  define: {
-    global: "(window)",
+  build: {
+    rollupOptions: {
+      // To ignore missing import in "node_modules/@ethersphere/bee-js/dist/mjs/utils/stream.js"
+      shimMissingExports: true,
+    },
   },
 });
