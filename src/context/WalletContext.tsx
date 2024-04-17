@@ -46,6 +46,10 @@ export const WalletContextProvider = ({
     signerOrProvider: string | providers.Provider | Signer,
     address: string
   ) => {
+    const provider = dappRegistry.provider;
+
+    console.log(provider);
+
     try {
       setLoading(true);
       dappRegistry.connect(signerOrProvider);
@@ -59,6 +63,7 @@ export const WalletContextProvider = ({
       });
     } catch (error) {
       removeWallet();
+      dappRegistry.connect(provider);
       throw error;
     } finally {
       setLoading(false);
