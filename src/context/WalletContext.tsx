@@ -48,8 +48,6 @@ export const WalletContextProvider = ({
   ) => {
     const provider = dappRegistry.provider;
 
-    console.log(provider);
-
     try {
       setLoading(true);
       dappRegistry.connect(signerOrProvider);
