@@ -3,16 +3,32 @@ import intl from "react-intl-universal";
 import { ethers } from "ethers";
 import { ButtonProps, Button, CircularProgress } from "@mui/material";
 import { useWalletContext } from "../../context/WalletContext";
+import { useMessageContext } from "../../context/MessageContext";
 
 const ConnectButton = (props: ButtonProps) => {
   const { connected, loading, setWallet, removeWallet } = useWalletContext();
+  const { setMessage } = useMessageContext();
 
   const connect = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-    await provider.send("eth_requestAccounts", []);
-    const address = await provider.getSigner().getAddress();
+    try {
+      const provider = new ethers.providers.Web3Provider(
+        window.ethereum,
+        "any"
+      );
+      await provider.send("eth_requestAccounts", []);
+      const address = await provider.getSigner().getAddress();
 
-    setWallet(provider.getSigner(), address);
+      await setWallet(provider.getSigner(), address);
+    } catch (error) {
+      console.error(error);
+
+      setMessage({
+        text: intl.get("SWITCH_NETWORK", {
+          network: import.meta.env.VITE_ENVIRONMENT,
+        }),
+        level: "warning",
+      });
+    }
   };
 
   if (loading) {

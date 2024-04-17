@@ -39,5 +39,6 @@
   "EXPIRED_DAPPS": "My Expired dApps",
   "RECORD_HASH": "Record hash",
   "SWARM_LOCATION": "Swarm location",
-  "COPY_TO_CLIPBOARD_MESSAGE": "Text copied to clipboard"
+  "COPY_TO_CLIPBOARD_MESSAGE": "Text copied to clipboard",
+  "SWITCH_NETWORK": "Cannot connect, please switch network to {network}"
 }

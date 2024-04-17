@@ -6,20 +6,23 @@ import { LocalesContextProvider } from "./context/LocalesContext";
 import { ThemeContextProvider } from "./context/ThemeContext";
 import { WalletContextProvider } from "./context/WalletContext";
 import Routes from "./routes/Routes";
+import { MessageContextProvider } from "./context/MessageContext";
 
 function App() {
   return (
     <BrowserRouter>
       <ThemeContextProvider>
         <LocalesContextProvider>
-          <WalletContextProvider>
-            <DappContextProvider>
-              <CssBaseline />
-              <AppLayout>
-                <Routes />
-              </AppLayout>
-            </DappContextProvider>
-          </WalletContextProvider>
+          <MessageContextProvider>
+            <WalletContextProvider>
+              <DappContextProvider>
+                <CssBaseline />
+                <AppLayout>
+                  <Routes />
+                </AppLayout>
+              </DappContextProvider>
+            </WalletContextProvider>
+          </MessageContextProvider>
         </LocalesContextProvider>
       </ThemeContextProvider>
     </BrowserRouter>
