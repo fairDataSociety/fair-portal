@@ -12,9 +12,9 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@ethersphere/bee-js": "^6.4.0",
+    "@ethersphere/bee-js": "^6.9.0",
     "@fairdatasociety/beeson": "^0.1.1",
-    "@fairdatasociety/fdp-contracts-js": "^3.7.2",
+    "@fairdatasociety/fdp-contracts-js": "^3.12.0",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.5",
     "ethers": "^5.7.2",
