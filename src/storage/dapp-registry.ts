@@ -64,7 +64,7 @@ export async function downloadDapp(
 ): Promise<LocalDapp> {
   const data = await bee.downloadData(swarmLocation.substring(2));
 
-  const deserializedBeeson = (await BeeSon.deserialize(data)) as BeeSon<Dapp>;
+  const deserializedBeeson = (await BeeSon.deserialize(data.toUint8Array())) as BeeSon<Dapp>;
 
   const dappSchema = new BeeSon({ json: DappSchema });
 
