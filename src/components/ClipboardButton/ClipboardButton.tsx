@@ -11,7 +11,7 @@ export interface ClipboardButtonProps {
 const ClipboardButton = ({ text, size }: ClipboardButtonProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const [closeTimeoutHandle, setCloseTimeoutHandle] =
-    useState<NodeJS.Timeout | null>(null);
+    useState<ReturnType<typeof setTimeout> | null>(null);
 
   const onClick = () => {
     navigator.clipboard.writeText(text);
